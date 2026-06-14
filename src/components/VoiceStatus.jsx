@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { speakResponse } from "../utils/speech";
 
+
 function VoiceStatus() {
   const [status, setStatus] = useState("STANDBY");
   const [command, setCommand] = useState("");
   const [reply, setReply] = useState("");
-
 
   const startListening = () => {
     const SpeechRecognition =
@@ -19,7 +19,6 @@ function VoiceStatus() {
 
     const recognition = new SpeechRecognition();
 
-    // Auto-detect browser language
     recognition.lang = navigator.language;
     recognition.interimResults = false;
     recognition.continuous = false;
@@ -32,48 +31,39 @@ function VoiceStatus() {
   const text =
     event.results[0][0].transcript;
 
+  console.log("HEARD:", text);
+
   setCommand(text);
 
   setStatus("PROCESSING...");
 
-  try {
-    const response = await fetch(
-      "http://localhost:5000/api/chat",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type":
-            "application/json",
-        },
-        body: JSON.stringify({
-          message: text,
-        }),
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/chat",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              message: text,
+            }),
+          }
+        );
+
+        const data = await response.json();
+
+        setReply(data.reply);
+
+        // Use speech.js utility
+        speakResponse(data.reply);
+
+        setStatus("RESPONDED");
+      } catch (error) {
+        console.error(error);
+        setStatus("ERROR");
       }
-    );
-
-    const data =
-      await response.json();
-
-    setReply(data.reply);
-
-    const speech =
-      new SpeechSynthesisUtterance(
-        data.reply
-      );
-
-    speech.lang = "auto";
-
-    window.speechSynthesis.speak(
-      speech
-    );
-
-    setStatus("RESPONDED");
-  } catch (error) {
-    console.error(error);
-
-    setStatus("ERROR");
-  }
-};
+    };
 
     recognition.onerror = () => {
       setStatus("ERROR");
@@ -117,20 +107,21 @@ function VoiceStatus() {
             <p className="text-cyan-500 text-xs mb-1">
               LAST COMMAND
             </p>
-            {reply && (
-  <div className="mt-4">
-    <p className="text-cyan-500 text-xs">
-      JARVIS RESPONSE
-    </p>
-
-    <p className="text-cyan-300 mt-1">
-      {reply}
-    </p>
-  </div>
-)}
 
             <p className="text-cyan-300">
               {command}
+            </p>
+          </div>
+        )}
+
+        {reply && (
+          <div className="mt-4">
+            <p className="text-cyan-500 text-xs mb-1">
+              JARVIS RESPONSE
+            </p>
+
+            <p className="text-cyan-300 mt-1">
+              {reply}
             </p>
           </div>
         )}
@@ -138,5 +129,6 @@ function VoiceStatus() {
     </div>
   );
 }
+
 
 export default VoiceStatus;

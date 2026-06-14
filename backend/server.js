@@ -110,6 +110,8 @@ app.post("/api/chat", async (req, res) => {
     const intent = detectIntent(message);
     console.log("MESSAGE:", message);
 console.log("INTENT:", intent);
+    console.log("MESSAGE:", message);
+console.log("INTENT:", intent);
 if (intent === "weather") {
   console.log("ENTERED WEATHER ROUTE");
 }
@@ -121,11 +123,9 @@ if (intent === "weather") {
 
     const weather = await getWeather();
 
-    console.log(weather);
-
     return res.json({
-      reply: weather,
-    });
+  reply: `Current temperature is ${weather.temperature} degrees Celsius. Wind speed is ${weather.windspeed} kilometers per hour.`,
+});
   } catch (err) {
     console.error("WEATHER ERROR:");
     console.error(err);
@@ -164,7 +164,16 @@ if (intent === "weather") {
     const response =
       await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: message,
+        contents: `
+You are JARVIS, an advanced AI assistant inspired by Iron Man.
+
+You are intelligent, concise, confident, and helpful.
+
+You speak naturally like a real assistant,
+not like a chatbot.
+
+User: ${message}
+`,
       });
 
     res.json({

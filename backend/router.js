@@ -1,26 +1,21 @@
+console.log("ROUTER VERSION 2 LOADED");
 export function detectIntent(message) {
   const text = message.toLowerCase();
 
   if (
-    text.includes("weather") ||
-    text.includes("temperature") ||
-    text.includes("humidity")
+    /\b(weather|temperature|humidity|forecast)\b/.test(text)
   ) {
     return "weather";
   }
 
   if (
-    text.includes("news") ||
-    text.includes("headline")
+    /\b(news|headline|headlines)\b/.test(text)
   ) {
     return "news";
   }
 
   if (
-    text.includes("cpu") ||
-    text.includes("ram") ||
-    text.includes("battery") ||
-    text.includes("system")
+    /\b(cpu|ram|battery|system)\b/.test(text)
   ) {
     return "system";
   }

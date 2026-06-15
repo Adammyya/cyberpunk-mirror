@@ -9,7 +9,13 @@ import { detectIntent } from "./router.js";
 import { getWeather } from "./weatherTool.js";
 import { getSystemInfo } from "./systemTool.js";
 import { saveNews, getNews } from "./newsMemory.js";
+import {
+  remember,
+  recall,
+} from "./memory.js";
 
+import {addTask, getTasks, deleteTask,
+} from "./tasks.js";
 
 
 dotenv.config();
@@ -107,84 +113,207 @@ app.post("/api/chat", async (req, res) => {
       });
     }
 
-    const intent = detectIntent(message);
-    console.log("MESSAGE:", message);
-console.log("INTENT:", intent);
-    console.log("MESSAGE:", message);
-console.log("INTENT:", intent);
-if (intent === "weather") {
-  console.log("ENTERED WEATHER ROUTE");
-}
+    const text = message.toLowerCase();
 
-    // WEATHER
-    if (intent === "weather") {
-  try {
-    console.log("CALLING getWeather()");
+    // =====================
+    // TASKS
+    // =====================
 
-    const weather = await getWeather();
+    if (text.startsWith("add task")) {
+      const task = message
+        .replace(/add task/i, "")
+        .trim();
 
-    return res.json({
-  reply: `Current temperature is ${weather.temperature} degrees Celsius. Wind speed is ${weather.windspeed} kilometers per hour.`,
-});
-  } catch (err) {
-    console.error("WEATHER ERROR:");
-    console.error(err);
+      if (!task) {
+        return res.json({
+          reply: "Please provide a task.",
+        });
+      }
 
-    return res.status(500).json({
-      error: err.message,
-    });
-  }
-}
-
-    // SYSTEM
-    if (intent === "system") {
-      const stats = await getSystemInfo();
+      addTask(task);
 
       return res.json({
-        reply: `CPU usage is ${stats.cpu} percent. RAM usage is ${stats.ram} percent. Battery is ${stats.battery} percent.`,
+        reply: `Task added: ${task}`,
       });
     }
 
+    if (
+      text.includes("show tasks") ||
+      text.includes("show my tasks")
+    ) {
+      const tasks = getTasks();
+
+      if (!tasks.length) {
+        return res.json({
+          reply: "You have no tasks.",
+        });
+      }
+
+      return res.json({
+        reply: tasks
+          .map(
+            (task, index) =>
+              `${index + 1}. ${task}`
+          )
+          .join("\n"),
+      });
+    }
+
+    const deleteMatch =
+      text.match(/delete task (\d+)/);
+
+    if (deleteMatch) {
+      const taskNumber =
+        parseInt(deleteMatch[1]) - 1;
+
+      const success =
+        deleteTask(taskNumber);
+
+      return res.json({
+        reply: success
+          ? "Task deleted."
+          : "Task not found.",
+      });
+    }
+
+    // =====================
+    // MEMORY
+    // =====================
+
+    const nameMatch =
+      message.match(/my name is (.+)/i);
+
+    if (nameMatch) {
+      const name =
+        nameMatch[1].trim();
+
+      remember("name", name);
+
+      return res.json({
+        reply: `Nice to meet you, ${name}. I'll remember that.`,
+      });
+    }
+
+    if (
+      text.includes("what is my name") ||
+      text.includes("what's my name")
+    ) {
+      const name = recall("name");
+
+      return res.json({
+        reply: name
+          ? `Your name is ${name}.`
+          : "I don't know your name yet.",
+      });
+    }
+
+    // =====================
+    // INTENT ROUTER
+    // =====================
+
+    const intent =
+      detectIntent(message);
+
+    console.log(
+      "MESSAGE:",
+      message
+    );
+    console.log(
+      "INTENT:",
+      intent
+    );
+
+    // =====================
+    // WEATHER
+    // =====================
+
+    if (intent === "weather") {
+      const weather =
+        await getWeather();
+
+      return res.json({
+        reply:
+          `Current temperature is ${weather.temperature}°C. ` +
+          `Wind speed is ${weather.windspeed} km/h.`,
+      });
+    }
+
+    // =====================
+    // SYSTEM
+    // =====================
+
+    if (intent === "system") {
+      const stats =
+        await getSystemInfo();
+
+      return res.json({
+        reply:
+          `CPU usage is ${stats.cpu}% . ` +
+          `RAM usage is ${stats.ram}% . ` +
+          `Battery is ${stats.battery}%.`,
+      });
+    }
+
+    // =====================
     // NEWS
+    // =====================
+
     if (intent === "news") {
       const news = getNews();
 
       if (!news.length) {
         return res.json({
-          reply: "No news available.",
+          reply:
+            "No news available.",
         });
       }
 
       return res.json({
-        reply: `Top headline: ${news[0].title}`,
+        reply:
+          `Top headline: ${news[0].title}`,
       });
     }
 
-    // GEMINI FALLBACK
-    const response =
-      await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: `
+    // =====================
+    // GEMINI
+    // =====================
+
+    try {
+      const response =
+        await ai.models.generateContent({
+          model:
+            "gemini-2.0-flash-lite",
+          contents: `
 You are JARVIS, an advanced AI assistant inspired by Iron Man.
 
-You are intelligent, concise, confident, and helpful.
+You are intelligent, concise, confident and helpful.
 
-You speak naturally like a real assistant,
-not like a chatbot.
+You speak naturally like a real assistant.
 
 User: ${message}
 `,
+        });
+
+      return res.json({
+        reply: response.text,
       });
 
-    res.json({
-      reply: response.text,
-    });
+    } catch (error) {
+      console.error(
+        "GEMINI ERROR:"
+      );
+      console.error(error);
+
+      return res.json({
+        reply:
+          "I'm currently experiencing heavy load from the AI core. Please try again in a few moments.",
+      });
+    }
 
   } catch (error) {
-    console.error("GEMINI ERROR:");
     console.error(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       error: error.message,
     });
   }
@@ -199,7 +328,7 @@ app.get("/api/test-ai", async (req, res) => {
   try {
     const response =
       await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.0-flash-lite",
         contents: "Who are you?",
       });
 
@@ -226,4 +355,4 @@ app.listen(PORT, () => {
   console.log(
     `Server running on port ${PORT}`
   );
-});
+}); 

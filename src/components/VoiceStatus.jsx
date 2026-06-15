@@ -18,16 +18,19 @@ function VoiceStatus() {
     }
 
     const recognition = new SpeechRecognition();
+    
 
-    recognition.lang = navigator.language;
+    recognition.lang = "en-IN";
     recognition.interimResults = false;
     recognition.continuous = false;
+    recognition.maxAlternatives = 5;
 
     setStatus("LISTENING...");
 
     recognition.start();
 
     recognition.onresult = async (event) => {
+      console.log(event.results);
   const text =
     event.results[0][0].transcript;
 
@@ -129,6 +132,9 @@ function VoiceStatus() {
     </div>
   );
 }
+
+
+
 
 
 export default VoiceStatus;

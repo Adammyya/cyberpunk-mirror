@@ -9,13 +9,14 @@ import { detectIntent } from "./router.js";
 import { getWeather } from "./weatherTool.js";
 import { getSystemInfo } from "./systemTool.js";
 import { saveNews, getNews } from "./newsMemory.js";
-import {
-  remember,
-  recall,
-} from "./memory.js";
 
 import {addTask, getTasks, deleteTask,
 } from "./tasks.js";
+import {
+  remember,
+  recall,
+  getAllMemory,
+} from "./memory.js";
 
 
 dotenv.config();
@@ -118,6 +119,7 @@ app.post("/api/chat", async (req, res) => {
     // =====================
     // TASKS
     // =====================
+    console.log("ADD TASK ROUTE HIT");
 
     if (text.startsWith("add task")) {
       const task = message
@@ -138,9 +140,11 @@ app.post("/api/chat", async (req, res) => {
     }
 
     if (
-      text.includes("show tasks") ||
-      text.includes("show my tasks")
-    ) {
+  text.includes("show task") ||
+  text.includes("show tasks") ||
+  text.includes("show my task") ||
+  text.includes("show my tasks")
+) {
       const tasks = getTasks();
 
       if (!tasks.length) {
@@ -179,6 +183,75 @@ app.post("/api/chat", async (req, res) => {
     // =====================
     // MEMORY
     // =====================
+    const rememberMatch =
+  message.match(
+    /remember my (.+?) is (.+)/i
+  );
+
+if (rememberMatch) {
+  const key =
+    rememberMatch[1].trim();
+
+  const value =
+    rememberMatch[2].trim();
+
+  remember(key, value);
+
+  return res.json({
+    reply:
+      `I will remember that your ${key} is ${value}.`,
+  });
+}
+const recallMatch =
+  message.match(
+    /what is my (.+)/i
+  );
+
+if (recallMatch) {
+  const key =
+    recallMatch[1].trim();
+
+  const value =
+    recall(key);
+
+  return res.json({
+    reply: value
+      ? `Your ${key} is ${value}.`
+      : `I don't know your ${key} yet.`,
+  });
+}
+if (
+  text.includes(
+    "what do you know about me"
+  )
+) {
+  const memory =
+    getAllMemory();
+
+  const entries =
+    Object.entries(memory);
+
+  if (!entries.length) {
+    return res.json({
+      reply:
+        "I don't know anything about you yet.",
+    });
+  }
+
+  const profile =
+    entries
+      .map(
+        ([key, value]) =>
+          `${key}: ${value}`
+      )
+      .join("\n");
+
+  return res.json({
+    reply:
+      `Here's what I know:\n\n${profile}`,
+  });
+}
+
 
     const nameMatch =
       message.match(/my name is (.+)/i);

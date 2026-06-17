@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import UserProfile from "./components/UserProfile";
 import Header from "./components/Header";
 import AICore from "./components/AICore";
 import Weather from "./components/Weather";
@@ -84,13 +84,9 @@ function App() {
         </div>
 
         {/* CALENDAR */}
-        <div className="border border-cyan-500 rounded-lg p-4 glow min-h-0">
-          <h2 className="text-2xl font-bold mb-4">
-            CALENDAR
-          </h2>
-
-          <p>No events today</p>
-        </div>
+        <div className="border border-cyan-500 rounded-lg p-4 glow">
+  <UserProfile />
+</div>
 
         {/* NEWS FEED */}
         <div className="col-span-2 border border-cyan-500 rounded-lg p-4 glow overflow-hidden min-h-0">

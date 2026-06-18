@@ -9,14 +9,10 @@ import { detectIntent } from "./router.js";
 import { getWeather } from "./weatherTool.js";
 import { getSystemInfo } from "./systemTool.js";
 import { saveNews, getNews } from "./newsMemory.js";
+import {addTask, getTasks, deleteTask,} from "./tasks.js";
+import {remember, recall, getAllMemory,} from "./memory.js";
+import {addLog, getLogs,} from "./logs.js";
 
-import {addTask, getTasks, deleteTask,
-} from "./tasks.js";
-import {
-  remember,
-  recall,
-  getAllMemory,
-} from "./memory.js";
 
 
 dotenv.config();
@@ -133,6 +129,9 @@ app.post("/api/chat", async (req, res) => {
       }
 
       addTask(task);
+      addLog(
+  `Task added: ${task}`
+);
 
       return res.json({
         reply: `Task added: ${task}`,
@@ -172,6 +171,11 @@ app.post("/api/chat", async (req, res) => {
 
       const success =
         deleteTask(taskNumber);
+        if (success) {
+  addLog(
+    `Task deleted: #${taskNumber + 1}`
+  );
+}
 
       return res.json({
         reply: success
@@ -196,6 +200,9 @@ if (rememberMatch) {
     rememberMatch[2].trim();
 
   remember(key, value);
+  addLog(
+  `Memory updated: ${key}`
+);
 
   return res.json({
     reply:
@@ -303,6 +310,9 @@ if (
     if (intent === "weather") {
       const weather =
         await getWeather();
+        addLog(
+  "Weather request processed"
+);
 
       return res.json({
         reply:
@@ -352,6 +362,27 @@ if (
     // =====================
 
     try {
+      const memory = getAllMemory();
+
+const tasks = getTasks();
+
+const memoryContext =
+  Object.entries(memory)
+    .map(
+      ([key, value]) =>
+        `${key}: ${value}`
+    )
+    .join("\n");
+
+const taskContext =
+  tasks.length
+    ? tasks
+        .map(
+          (task, index) =>
+            `${index + 1}. ${task}`
+        )
+        .join("\n")
+    : "No active tasks";
       const response =
         await ai.models.generateContent({
           model:
@@ -359,9 +390,19 @@ if (
           contents: `
 You are JARVIS, an advanced AI assistant inspired by Iron Man.
 
-You are intelligent, concise, confident and helpful.
+You are intelligent, concise, confident, and helpful.
 
-You speak naturally like a real assistant.
+You have access to the user's profile and tasks.
+
+USER PROFILE:
+${memoryContext}
+
+ACTIVE TASKS:
+${taskContext}
+
+Use this information whenever it is relevant.
+
+Speak naturally like a real assistant.
 
 User: ${message}
 `,
@@ -426,6 +467,18 @@ app.get("/api/memory", (req, res) => {
   const memory = getAllMemory();
 
   res.json(memory);
+});
+
+app.get("/api/tasks", (req, res) => {
+  res.json(getTasks());
+});
+
+// ======================================
+// LOGS API
+// ======================================
+
+app.get("/api/logs", (req, res) => {
+  res.json(getLogs());
 });
 
 // ======================================

@@ -6,6 +6,9 @@ import Weather from "./components/Weather";
 import VoiceStatus from "./components/VoiceStatus";
 import SystemStats from "./components/SystemStats";
 import NewsFeed from "./components/NewsFeed";
+import TaskPanel from "./components/TaskPanel";
+import LogsPanel from "./components/LogsPanel";
+
 
 function App() {
   const [time, setTime] = useState("");
@@ -100,15 +103,14 @@ function App() {
         {/* SYSTEM LOGS */}
         <div className="border border-cyan-500 rounded-lg p-4 glow overflow-auto min-h-0">
           <h2 className="text-2xl font-bold mb-4">
-            SYSTEM // LOGS
+            SYSTEM LOGS
           </h2>
+          <LogsPanel />
+        </div>
 
-          <div className="space-y-2 text-cyan-400">
-            <p>AI CORE ONLINE</p>
-            <p>WEATHER LINK ACTIVE</p>
-            <p>NEWS STREAM ACTIVE</p>
-            <p>VOICE MODULE READY</p>
-          </div>
+        {/* TASK PANEL */}
+        <div className="border border-cyan-500 rounded-lg p-4 glow overflow-auto min-h-0">
+          <TaskPanel />
         </div>
 
       </div>

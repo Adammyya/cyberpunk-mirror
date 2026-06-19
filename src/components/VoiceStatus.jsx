@@ -28,11 +28,30 @@ function VoiceStatus() {
     setStatus("LISTENING...");
 
     recognition.start();
+    fetch("http://localhost:5000/api/logs", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    message: "MIC ACTIVATED",
+  }),
+});
+
 
     recognition.onresult = async (event) => {
       console.log(event.results);
   const text =
     event.results[0][0].transcript;
+    fetch("http://localhost:5000/api/logs", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    message: `COMMAND: ${text}`,
+  }),
+});
 
   console.log("HEARD:", text);
 

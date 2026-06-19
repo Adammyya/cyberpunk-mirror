@@ -481,6 +481,20 @@ app.get("/api/logs", (req, res) => {
   res.json(getLogs());
 });
 
+app.get("/api/logs", (req, res) => {
+  res.json(getLogs());
+});
+
+app.post("/api/logs", (req, res) => {
+  const { message } = req.body;
+
+  addLog(message);
+
+  res.json({
+    success: true,
+  });
+});
+
 // ======================================
 // SERVER
 // ======================================

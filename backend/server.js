@@ -12,6 +12,7 @@ import { saveNews, getNews } from "./newsMemory.js";
 import {addTask, getTasks, deleteTask,} from "./tasks.js";
 import {remember, recall, getAllMemory,} from "./memory.js";
 import {addLog, getLogs,} from "./logs.js";
+import {addConversation, getHistory,} from "./conversationMemory.js";
 
 
 
@@ -99,7 +100,6 @@ app.get("/api/news", async (req, res) => {
 // ======================================
 // GEMINI CHAT API
 // ======================================
-
 app.post("/api/chat", async (req, res) => {
   try {
     const { message } = req.body;
@@ -115,7 +115,6 @@ app.post("/api/chat", async (req, res) => {
     // =====================
     // TASKS
     // =====================
-    console.log("ADD TASK ROUTE HIT");
 
     if (text.startsWith("add task")) {
       const task = message
@@ -129,9 +128,10 @@ app.post("/api/chat", async (req, res) => {
       }
 
       addTask(task);
+
       addLog(
-  `Task added: ${task}`
-);
+        `Task added: ${task}`
+      );
 
       return res.json({
         reply: `Task added: ${task}`,
@@ -139,11 +139,11 @@ app.post("/api/chat", async (req, res) => {
     }
 
     if (
-  text.includes("show task") ||
-  text.includes("show tasks") ||
-  text.includes("show my task") ||
-  text.includes("show my tasks")
-) {
+      text.includes("show task") ||
+      text.includes("show tasks") ||
+      text.includes("show my task") ||
+      text.includes("show my tasks")
+    ) {
       const tasks = getTasks();
 
       if (!tasks.length) {
@@ -171,11 +171,12 @@ app.post("/api/chat", async (req, res) => {
 
       const success =
         deleteTask(taskNumber);
-        if (success) {
-  addLog(
-    `Task deleted: #${taskNumber + 1}`
-  );
-}
+
+      if (success) {
+        addLog(
+          `Task deleted: #${taskNumber + 1}`
+        );
+      }
 
       return res.json({
         reply: success
@@ -187,81 +188,90 @@ app.post("/api/chat", async (req, res) => {
     // =====================
     // MEMORY
     // =====================
+
     const rememberMatch =
-  message.match(
-    /remember my (.+?) is (.+)/i
-  );
+      message.match(
+        /remember my (.+?) is (.+)/i
+      );
 
-if (rememberMatch) {
-  const key =
-    rememberMatch[1].trim();
+    if (rememberMatch) {
+      const key =
+        rememberMatch[1].trim();
 
-  const value =
-    rememberMatch[2].trim();
+      const value =
+        rememberMatch[2].trim();
 
-  remember(key, value);
-  addLog(
-  `Memory updated: ${key}`
-);
+      remember(key, value);
 
-  return res.json({
-    reply:
-      `I will remember that your ${key} is ${value}.`,
-  });
-}
-const recallMatch =
-  message.match(
-    /what is my (.+)/i
-  );
+      addLog(
+        `Memory updated: ${key}`
+      );
 
-if (recallMatch) {
-  const key =
-    recallMatch[1].trim();
+      return res.json({
+        reply:
+          `I will remember that your ${key} is ${value}.`,
+      });
+    }
 
-  const value =
-    recall(key);
+    const recallMatch =
+      message.match(
+        /what is my (.+)/i
+      );
 
-  return res.json({
-    reply: value
-      ? `Your ${key} is ${value}.`
-      : `I don't know your ${key} yet.`,
-  });
-}
-if (
-  text.includes(
-    "what do you know about me"
-  )
-) {
-  const memory =
-    getAllMemory();
+    if (recallMatch) {
+      const key =
+        recallMatch[1].trim();
 
-  const entries =
-    Object.entries(memory);
+      const value =
+        recall(key);
 
-  if (!entries.length) {
-    return res.json({
-      reply:
-        "I don't know anything about you yet.",
-    });
-  }
+      return res.json({
+        reply: value
+          ? `Your ${key} is ${value}.`
+          : `I don't know your ${key} yet.`,
+      });
+    }
 
-  const profile =
-    entries
-      .map(
-        ([key, value]) =>
-          `${key}: ${value}`
+    if (
+      text.includes(
+        "what do you know about me"
       )
-      .join("\n");
+    ) {
+      const memory =
+        getAllMemory();
 
-  return res.json({
-    reply:
-      `Here's what I know:\n\n${profile}`,
-  });
-}
+      const entries =
+        Object.entries(memory);
 
+      if (!entries.length) {
+        return res.json({
+          reply:
+            "I don't know anything about you yet.",
+        });
+      }
+
+      const profile =
+        entries
+          .map(
+            ([key, value]) =>
+              `${key}: ${value}`
+          )
+          .join("\n");
+
+      return res.json({
+        reply:
+          `Here's what I know:\n\n${profile}`,
+      });
+    }
+
+    // =====================
+    // NAME MEMORY
+    // =====================
 
     const nameMatch =
-      message.match(/my name is (.+)/i);
+      message.match(
+        /my name is (.+)/i
+      );
 
     if (nameMatch) {
       const name =
@@ -270,15 +280,21 @@ if (
       remember("name", name);
 
       return res.json({
-        reply: `Nice to meet you, ${name}. I'll remember that.`,
+        reply:
+          `Nice to meet you, ${name}. I'll remember that.`,
       });
     }
 
     if (
-      text.includes("what is my name") ||
-      text.includes("what's my name")
+      text.includes(
+        "what is my name"
+      ) ||
+      text.includes(
+        "what's my name"
+      )
     ) {
-      const name = recall("name");
+      const name =
+        recall("name");
 
       return res.json({
         reply: name
@@ -298,51 +314,53 @@ if (
       "MESSAGE:",
       message
     );
+
     console.log(
       "INTENT:",
       intent
     );
 
-    // =====================
     // WEATHER
-    // =====================
 
     if (intent === "weather") {
       const weather =
         await getWeather();
-        addLog(
-  "Weather request processed"
-);
+
+      addLog(
+        "Weather request processed"
+      );
 
       return res.json({
         reply:
-          `Current temperature is ${weather.temperature}°C. ` +
-          `Wind speed is ${weather.windspeed} km/h.`,
+          `Current temperature is ${weather.temperature}°C. Wind speed is ${weather.windspeed} km/h.`,
       });
     }
 
-    // =====================
     // SYSTEM
-    // =====================
 
     if (intent === "system") {
       const stats =
         await getSystemInfo();
 
+      addLog(
+        "System status requested"
+      );
+
       return res.json({
         reply:
-          `CPU usage is ${stats.cpu}% . ` +
-          `RAM usage is ${stats.ram}% . ` +
-          `Battery is ${stats.battery}%.`,
+          `CPU usage is ${stats.cpu}%. RAM usage is ${stats.ram}%. Battery is ${stats.battery}%.`,
       });
     }
 
-    // =====================
     // NEWS
-    // =====================
 
     if (intent === "news") {
-      const news = getNews();
+      const news =
+        getNews();
+
+      addLog(
+        "News requested"
+      );
 
       if (!news.length) {
         return res.json({
@@ -358,31 +376,39 @@ if (
     }
 
     // =====================
-    // GEMINI
+    // GEMINI + CONTEXT
     // =====================
 
+    const memory =
+      getAllMemory();
+
+    const tasks =
+      getTasks();
+
+    addLog(
+      "Memory loaded"
+    );
+
+    addLog(
+      "Tasks loaded"
+    );
+
+    addLog(
+      "AI context built"
+    );
+
+    const context = `
+MEMORY:
+${JSON.stringify(memory, null, 2)}
+
+TASKS:
+${tasks.join("\n")}
+
+CURRENT USER MESSAGE:
+${message}
+`;
+
     try {
-      const memory = getAllMemory();
-
-const tasks = getTasks();
-
-const memoryContext =
-  Object.entries(memory)
-    .map(
-      ([key, value]) =>
-        `${key}: ${value}`
-    )
-    .join("\n");
-
-const taskContext =
-  tasks.length
-    ? tasks
-        .map(
-          (task, index) =>
-            `${index + 1}. ${task}`
-        )
-        .join("\n")
-    : "No active tasks";
       const response =
         await ai.models.generateContent({
           model:
@@ -390,32 +416,36 @@ const taskContext =
           contents: `
 You are JARVIS, an advanced AI assistant inspired by Iron Man.
 
-You are intelligent, concise, confident, and helpful.
+You are intelligent, concise, confident and helpful.
 
-You have access to the user's profile and tasks.
+You have access to the user's stored memory and task list.
 
-USER PROFILE:
-${memoryContext}
-
-ACTIVE TASKS:
-${taskContext}
-
-Use this information whenever it is relevant.
-
-Speak naturally like a real assistant.
-
-User: ${message}
+${context}
 `,
         });
 
-      return res.json({
-        reply: response.text,
-      });
+      addConversation(
+  message,
+  response.text
+);
+addConversation(
+  "test user",
+  "test ai"
+);
+addConversation(
+  message,
+  "TEST RESPONSE"
+);
+
+return res.json({
+  reply: response.text,
+});
 
     } catch (error) {
       console.error(
         "GEMINI ERROR:"
       );
+
       console.error(error);
 
       return res.json({
@@ -432,33 +462,6 @@ User: ${message}
     });
   }
 });
-
-
-// ======================================
-// TEST GEMINI
-// ======================================
-
-app.get("/api/test-ai", async (req, res) => {
-  try {
-    const response =
-      await ai.models.generateContent({
-        model: "gemini-2.0-flash-lite",
-        contents: "Who are you?",
-      });
-
-    res.json({
-      reply: response.text,
-    });
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      error: error.message,
-    });
-  }
-});
-
-
 // ======================================
 // MEMORY API
 // ======================================
@@ -481,9 +484,9 @@ app.get("/api/logs", (req, res) => {
   res.json(getLogs());
 });
 
-app.get("/api/logs", (req, res) => {
-  res.json(getLogs());
-});
+// ======================================
+// CONVERSATION HISTORY API
+// ======================================
 
 app.post("/api/logs", (req, res) => {
   const { message } = req.body;
@@ -493,6 +496,25 @@ app.post("/api/logs", (req, res) => {
   res.json({
     success: true,
   });
+});
+
+
+// ======================================
+// CONVERSATION HISTORY API
+// ====================================== 
+app.get("/api/conversation", (req, res) => {
+  res.json(getHistory());
+});
+
+// ======================================
+// TEST CONVERSATION API
+// ======================================
+app.get("/api/test-conversation", (req, res) => {
+  addConversation("hello", "world");
+
+  console.log(getHistory());
+
+  res.json(getHistory());
 });
 
 // ======================================
@@ -505,4 +527,4 @@ app.listen(PORT, () => {
   console.log(
     `Server running on port ${PORT}`
   );
-}); 
+});

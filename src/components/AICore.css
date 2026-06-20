@@ -1,191 +1,273 @@
+:root {
+  --aura-white: #f8fafc;
+  --aura-violet: #a855f7;
+  --aura-lavender: #c084fc;
+  --aura-blue: #7dd3fc;
+}
+
+/* ==================================
+   CONTAINER
+================================== */
+
 .ai-core-container {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: cyan;
-  gap: 8px;
+  gap: 10px;
+
+  color: var(--aura-white);
 }
 
-/* =========================
+/* ==================================
    REACTOR
-========================= */
+================================== */
 
 .reactor {
   position: relative;
-  width: 140px;
-  height: 140px;
+
+  width: 300px;
+  height: 300px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  overflow: visible;
+  animation: auraGlow 4s ease-in-out infinite;
 }
 
-/* =========================
-   OUTER TECH RING
-========================= */
+/* ==================================
+   OUTER HUD
+================================== */
 
 .hud-ring {
   position: absolute;
 
-  width: 150px;
-  height: 150px;
+  width: 240px;
+  height: 240px;
 
   border-radius: 50%;
-  border: 1px dashed rgba(0, 255, 255, 0.4);
 
-  animation: rotateClockwise 30s linear infinite;
+  border: 1px dashed rgba(168, 85, 247, 0.35);
+
+  animation: rotateClockwise 35s linear infinite;
 }
 
-/* =========================
+/* ==================================
    RINGS
-========================= */
+================================== */
 
 .ring {
   position: absolute;
   border-radius: 50%;
 }
 
-/* INNER ARC */
+/* INNER */
 
 .ring1 {
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 100px;
 
-  border-top: 4px solid cyan;
-  border-right: 4px solid cyan;
-  border-left: none;
-  border-bottom: none;
+  border-top: 4px solid var(--aura-blue);
+  border-right: 4px solid var(--aura-blue);
 
   animation: rotateClockwise 5s linear infinite;
 }
 
-/* MID ARC */
+/* MID */
 
 .ring2 {
-  width: 95px;
-  height: 95px;
+  width: 140px;
+  height: 140px;
 
-  border-left: 3px solid cyan;
-  border-bottom: 3px solid cyan;
-  border-top: none;
-  border-right: none;
+  border-left: 3px solid var(--aura-violet);
+  border-bottom: 3px solid var(--aura-violet);
 
   animation: rotateAnti 8s linear infinite;
 }
 
-/* OUTER ARC */
+/* OUTER */
 
 .ring3 {
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 180px;
 
-  border-top: 2px solid cyan;
-  border-bottom: 2px solid cyan;
-  border-left: none;
-  border-right: none;
+  border-top: 2px solid var(--aura-blue);
+  border-bottom: 2px solid var(--aura-blue);
 
   animation: rotateClockwise 12s linear infinite;
 }
 
-/* DASHED OUTER RING */
+/* DASHED */
 
 .ring4 {
-  width: 135px;
-  height: 135px;
+  width: 220px;
+  height: 220px;
 
-  border-radius: 50%;
-  border: 2px dashed rgba(0, 255, 255, 0.25);
+  border: 2px dashed rgba(168, 85, 247, 0.35);
 
   animation: rotateAnti 20s linear infinite;
 }
 
-/* =========================
+/* ==================================
    CROSSHAIR
-========================= */
+================================== */
 
 .crosshair {
   position: absolute;
-  background: rgba(0, 255, 255, 0.7);
+
+  background: rgba(248, 250, 252, 0.25);
 }
 
 .horizontal {
-  width: 110px;
+  width: 180px;
   height: 2px;
 }
 
 .vertical {
   width: 2px;
-  height: 110px;
+  height: 180px;
 }
 
-/* =========================
+/* ==================================
    CORE
-========================= */
+================================== */
 
 .core {
   position: absolute;
 
-  width: 28px;
-  height: 28px;
+  width: 42px;
+  height: 42px;
 
   border-radius: 50%;
-  background: cyan;
+
+  background: radial-gradient(
+    circle,
+    var(--aura-white) 0%,
+    #d8b4fe 35%,
+    var(--aura-violet) 100%
+  );
 
   box-shadow:
-    0 0 10px cyan,
-    0 0 20px cyan,
-    0 0 40px cyan;
+    0 0 15px var(--aura-white),
+    0 0 35px var(--aura-lavender),
+    0 0 70px var(--aura-violet);
 
-  animation: pulse 2s infinite;
+  animation: pulse 2s ease-in-out infinite;
 }
 
-/* =========================
-   TEXT
-========================= */
+/* ==================================
+   NODES
+================================== */
+
+.node {
+  position: absolute;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: var(--aura-violet);
+
+  box-shadow:
+    0 0 10px var(--aura-violet),
+    0 0 20px var(--aura-violet);
+
+  animation: nodePulse 2s infinite;
+}
+
+.node1 {
+  top: 28px;
+}
+
+.node2 {
+  top: 72px;
+  right: 28px;
+}
+
+.node3 {
+  bottom: 72px;
+  right: 28px;
+}
+
+.node4 {
+  bottom: 28px;
+}
+
+.node5 {
+  bottom: 72px;
+  left: 28px;
+}
+
+.node6 {
+  top: 72px;
+  left: 28px;
+}
+
+/* ==================================
+   TITLE
+================================== */
 
 .core-title {
   margin: 0;
 
-  font-size: 1.1rem;
-  font-weight: bold;
+  font-size: 1.25rem;
+  font-weight: 700;
+
+  color: var(--aura-white);
 
   text-shadow:
-    0 0 10px cyan,
-    0 0 20px cyan;
+    0 0 10px var(--aura-lavender),
+    0 0 20px var(--aura-violet);
 }
+
+/* ==================================
+   STATUS
+================================== */
 
 .core-status {
   text-align: center;
-  font-size: 0.65rem;
-  line-height: 1.5;
+  font-size: 0.68rem;
+  line-height: 1.6;
+
+  color: var(--aura-white);
 }
+
+/* ==================================
+   METRICS
+================================== */
 
 .core-metrics {
   display: flex;
-  justify-content: center;
-  gap: 18px;
+  gap: 22px;
 }
 
 .core-metrics h3 {
-  font-size: 14px;
   margin: 0;
 
-  text-shadow: 0 0 10px cyan;
+  color: var(--aura-white);
+
+  text-align: center;
+
+  text-shadow:
+    0 0 10px var(--aura-lavender);
 }
 
 .core-metrics p {
-  font-size: 8px;
-  letter-spacing: 1px;
   margin: 0;
+
+  font-size: 8px;
+
+  color: var(--aura-lavender);
+
+  text-align: center;
 }
 
-/* =========================
+/* ==================================
    ANIMATIONS
-========================= */
+================================== */
 
 @keyframes rotateClockwise {
   from {
@@ -218,5 +300,36 @@
 
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes nodePulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+}
+
+@keyframes auraGlow {
+  0% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.25);
+  }
+
+  100% {
+    filter: brightness(1);
   }
 }

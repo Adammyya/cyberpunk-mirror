@@ -8,6 +8,7 @@ import SystemStats from "./components/SystemStats";
 import NewsFeed from "./components/NewsFeed";
 import TaskPanel from "./components/TaskPanel";
 import LogsPanel from "./components/LogsPanel";
+import ConversationStream from "./components/ConversationStream";
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen w-screen bg-black text-cyan-400 p-4 overflow-hidden">
+    <div className="min-h-screen w-screen bg-black text-purple-300 p-4 overflow-hidden">
 
       {/* HEADER */}
       <Header />
@@ -40,7 +41,7 @@ function App() {
 >
 
         {/* CLOCK */}
-        <div className="border border-cyan-500 rounded-lg p-4 glow min-h-0">
+        <div className="border border-purple-500 rounded-lg p-4 glow min-h-0">
           <h2 className="text-2xl font-bold mb-4">
             CLOCK
           </h2>
@@ -55,12 +56,12 @@ function App() {
         </div>
 
         {/* AI CORE */}
-        <div className="border border-cyan-500 rounded-lg glow flex items-center justify-center overflow-hidden min-h-0">
+        <div className="border border-purple-500 rounded-lg glow flex items-center justify-center overflow-hidden min-h-0">
           <AICore />
         </div>
 
         {/* WEATHER */}
-        <div className="border border-cyan-500 rounded-lg p-4 glow min-h-0">
+        <div className="border border-purple-500 rounded-lg p-4 glow min-h-0">
           <h2 className="text-2xl font-bold mb-4">
             WEATHER
           </h2>
@@ -69,7 +70,7 @@ function App() {
         </div>
 
         {/* SYSTEM STATUS */}
-        <div className="border border-cyan-500 rounded-lg p-4 glow min-h-0">
+        <div className="border border-purple-500 rounded-lg p-4 glow min-h-0">
           <h2 className="text-2xl font-bold mb-4">
             SYSTEM STATUS
           </h2>
@@ -78,7 +79,7 @@ function App() {
         </div>
 
         {/* VOICE MODULE */}
-        <div className="border border-cyan-500 rounded-lg p-4 glow min-h-0">
+        <div className="border border-purple-500 rounded-lg p-4 glow min-h-0">
           <h2 className="text-2xl font-bold mb-4">
             VOICE MODULE
           </h2>
@@ -87,12 +88,12 @@ function App() {
         </div>
 
         {/* CALENDAR */}
-        <div className="border border-cyan-500 rounded-lg p-4 glow">
+        <div className="border border-purple-500 rounded-lg p-4 glow">
   <UserProfile />
 </div>
 
         {/* NEWS FEED */}
-        <div className="col-span-2 border border-cyan-500 rounded-lg p-4 glow overflow-hidden min-h-0">
+        <div className="col-span-2 border border-purple-500 rounded-lg p-4 glow overflow-hidden min-h-0">
           <h2 className="text-2xl font-bold mb-4">
             NEWS FEED
           </h2>
@@ -101,7 +102,7 @@ function App() {
         </div>
 
         {/* SYSTEM LOGS */}
-        <div className="border border-cyan-500 rounded-lg p-4 glow overflow-auto min-h-0">
+        <div className="border border-purple-500 rounded-lg p-4 glow overflow-auto min-h-0">
           <h2 className="text-2xl font-bold mb-4">
             SYSTEM LOGS
           </h2>
@@ -109,9 +110,9 @@ function App() {
         </div>
 
         {/* TASK PANEL */}
-        <div className="border border-cyan-500 rounded-lg p-4 glow overflow-auto min-h-0">
-          <TaskPanel />
-        </div>
+        <div className="border border-cyan-500 rounded-lg p-4 glow">
+  <ConversationStream />
+</div>
 
       </div>
     </div>

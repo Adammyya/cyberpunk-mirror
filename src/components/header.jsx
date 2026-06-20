@@ -16,20 +16,26 @@ function Header() {
   }, []);
 
   return (
-    <div className="border-b border-cyan-500 mb-4 pb-2 flex justify-between items-center text-cyan-400">
+    <div
+  className="mb-4 pb-2 flex justify-between items-center"
+  style={{
+    borderBottom: "1px solid rgba(168,85,247,.5)",
+    color: "var(--aura-white)"
+  }}
+>
       <div className="font-mono tracking-[4px] text-sm">
-        STARK.AI // J.A.R.V.I.S // BUILD 4.1.2
-      </div>
+  AURA OS // Adaptive Unified Reasoning Assistant
+</div>
 
       <div className="text-3xl font-bold font-mono">
         {time}
       </div>
 
       <div className="flex gap-6 text-xs font-mono">
-        <span>🟢 NEURAL ONLINE</span>
-        <span>🟡 MEM 88%</span>
-        <span>🔵 NET ACTIVE</span>
-      </div>
+        <span>◉ CORE ONLINE</span>
+<span>◉ MEMORY ACTIVE</span>
+<span>◉ VOICE READY</span>
+</div>
     </div>
   );
 }

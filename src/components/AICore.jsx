@@ -7,7 +7,6 @@ function AICore() {
       <div className="reactor">
         <div className="hud-ring"></div>
 
-        <div className="radar-sweep"></div>
 
         <div className="ring ring1"></div>
         <div className="ring ring2"></div>
@@ -15,46 +14,51 @@ function AICore() {
         <div className="ring ring4"></div>
 
         <div className="scan-line"></div>
-        <div className="crosshair horizontal"></div>
-<div className="crosshair vertical"></div>
 
         <div className="core"></div>
+        <div className="node node1"></div>
+<div className="node node2"></div>
+<div className="node node3"></div>
+<div className="node node4"></div>
+<div className="node node5"></div>
+<div className="node node6"></div>
 
 
       </div>
 
-      <h2 className="core-title">JARVIS CORE</h2>
+      <h2 className="core-title">
+  AURA
+</h2>
 
       <div className="core-status">
-        <p>SYSTEM ONLINE</p>
-        <p>VOICE MODULE READY</p>
-        <p>MEMORY OS STANDBY</p>
+        <p>CONSCIOUSNESS ACTIVE</p>
+<p>VOICE INTERFACE READY</p>
+<p>MEMORY MATRIX ONLINE</p>
 
         <p className="text-cyan-500 mt-4 tracking-widest">
-          ALL SYSTEMS NOMINAL
-        </p>
+  AURA CONSCIOUSNESS STABLE
+</p>
       </div>
 
       <div className="core-metrics">
 
         <div>
-          <h3>07</h3>
-          <p>TASKS</p>
+          <h3>MODULES</h3>
+          <p></p>
         </div>
 
         <div>
-          <h3>03</h3>
-          <p>EVENTS</p>
+          <h3>MEMORY</h3>
+          <p></p>
         </div>
 
         <div>
-          <h3>12</h3>
-          <p>ALERTS</p>
+          <h3></h3>
+          <h3>LOGS</h3>
         </div>
 
         <div>
-          <h3>99%</h3>
-          <p>UPTIME</p>
+          <h3>ONLINE</h3>
         </div>
 
       </div>
@@ -62,5 +66,9 @@ function AICore() {
     </div>
   );
 }
+
+<div className="text-xs tracking-[6px] mt-3">
+  CREATED BY ADAMYA
+</div> 
 
 export default AICore;

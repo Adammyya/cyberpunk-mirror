@@ -16,6 +16,7 @@ import {addConversation, getHistory,} from "./conversationMemory.js";
 
 
 
+
 dotenv.config();
 
 const app = express();
@@ -412,7 +413,7 @@ ${message}
       const response =
         await ai.models.generateContent({
           model:
-            "gemini-2.0-flash-lite",
+             "gemini-2.5-flash",
           contents: `
 You are JARVIS, an advanced AI assistant inspired by Iron Man.
 
@@ -435,6 +436,10 @@ addConversation(
 addConversation(
   message,
   "TEST RESPONSE"
+);
+addConversation(
+  message,
+  response.text
 );
 
 return res.json({
@@ -516,6 +521,13 @@ app.get("/api/test-conversation", (req, res) => {
 
   res.json(getHistory());
 });
+
+app.get(
+  "/api/conversation",
+  (req, res) => {
+    res.json(getHistory());
+  }
+);
 
 // ======================================
 // SERVER

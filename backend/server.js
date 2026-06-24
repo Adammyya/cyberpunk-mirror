@@ -15,6 +15,7 @@ import {addLog, getLogs,} from "./logs.js";
 import {addConversation, getHistory,} from "./conversationMemory.js";
 import {setMode,  getMode, getPrompt,} from "./personality.js";
 import { runDiagnostics } from "./diagnostics.js";
+import {detectMode,} from "./cognitiveRouter.js";
 
 
 
@@ -114,6 +115,14 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const text = message.toLowerCase();
+    const mode =
+  detectMode(message);
+
+setMode(mode);
+
+addLog(
+  `COGNITIVE SHIFT -> ${mode}`
+);
 
     // =====================
     // TASKS
@@ -425,6 +434,8 @@ if (
     // GEMINI + CONTEXT
     // =====================
 
+    const personalityPrompt = getPrompt();
+
     const memory =
       getAllMemory();
 
@@ -442,7 +453,7 @@ if (
     addLog(
       "AI context built"
     );
-
+    
     const context = `
 MEMORY:
 ${JSON.stringify(memory, null, 2)}
@@ -462,7 +473,7 @@ addLog("AURA THINKING");
           model:
              "gemini-2.5-flash",
           contents: `
-${getPrompt()}
+${personalityPrompt}
 
 CURRENT MODE:
 ${getMode()}
@@ -472,23 +483,10 @@ ${context}
 
         });
         addLog("AURA RESPONSE GENERATED");
-
-      addConversation(
-  message,
-  response.text
-);
-addConversation(
-  "test user",
-  "test ai"
-);
-addConversation(
-  message,
-  "TEST RESPONSE"
-);
-addConversation(
-  message,
-  response.text
-);
+        addConversation(
+           message,
+           response.text
+        );
 
 return res.json({
   reply: response.text,
@@ -515,6 +513,31 @@ return res.json({
     });
   }
 });
+
+// ======================================
+// PERSONALITY reSET API
+// ======================================
+
+app.post(
+  "/api/personality",
+  (req, res) => {
+
+    const { mode } = req.body;
+
+    setMode(mode);
+
+    addLog(
+      `COGNITIVE SHIFT -> ${mode}`
+    );
+
+    res.json({
+      success: true,
+      mode,
+    });
+  }
+);
+
+
 // ======================================
 // MEMORY API
 // ======================================
@@ -528,6 +551,37 @@ app.get("/api/memory", (req, res) => {
 app.get("/api/tasks", (req, res) => {
   res.json(getTasks());
 });
+// ======================================
+// PERSONALITY API
+// ======================================
+app.get(
+  "/api/personality",
+  (req, res) => {
+    res.json({
+      mode: getMode(),
+    });
+  }
+);
+
+app.post("/api/personality", (req, res) => {
+  const { mode } = req.body;
+
+  setMode(mode);
+
+  addLog(
+    `COGNITIVE SHIFT -> ${mode}`
+  );
+
+  res.json({
+    success: true,
+    mode,
+  });
+});
+// ======================================
+// TEST JSON API
+// ======================================
+
+
 
 // ======================================
 // LOGS API
@@ -594,6 +648,13 @@ app.get(
 // ======================================
 
 const PORT = 5000;
+app.post("/testjson", (req, res) => {
+  console.log(req.body);
+
+  res.json({
+    received: req.body,
+  });
+});
 
 app.listen(PORT, () => {
   console.log(

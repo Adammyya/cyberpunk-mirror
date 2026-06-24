@@ -1,12 +1,43 @@
 import "./AICore.css";
+import { useEffect, useState } from "react";
+import PersonalityStatus from "./PersonalityStatus";
 
 function AICore() {
+  const [currentMode, setCurrentMode] = useState("default");
+
+  useEffect(() => {
+    const fetchMode = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/personality"
+        );
+
+        const data = await response.json();
+
+        setCurrentMode(data.mode);
+      } catch (error) {
+        console.error(
+          "Error fetching personality mode:",
+          error
+        );
+      }
+    };
+
+    fetchMode();
+
+    const interval = setInterval(
+      fetchMode,
+      3000
+    );
+
+    return () =>
+      clearInterval(interval);
+  }, []);
+
   return (
     <div className="ai-core-container">
-
       <div className="reactor">
         <div className="hud-ring"></div>
-
 
         <div className="ring ring1"></div>
         <div className="ring ring2"></div>
@@ -16,59 +47,75 @@ function AICore() {
         <div className="scan-line"></div>
 
         <div className="core"></div>
+
         <div className="node node1"></div>
-<div className="node node2"></div>
-<div className="node node3"></div>
-<div className="node node4"></div>
-<div className="node node5"></div>
-<div className="node node6"></div>
-
-
+        <div className="node node2"></div>
+        <div className="node node3"></div>
+        <div className="node node4"></div>
+        <div className="node node5"></div>
+        <div className="node node6"></div>
       </div>
 
       <h2 className="core-title">
-  AURA
-</h2>
+        AURA
+      </h2>
+
+      <PersonalityStatus
+        currentMode={currentMode}
+      />
 
       <div className="core-status">
         <p>CONSCIOUSNESS ACTIVE</p>
-<p>VOICE INTERFACE READY</p>
-<p>MEMORY MATRIX ONLINE</p>
+        <p>VOICE INTERFACE READY</p>
+        <p>MEMORY MATRIX ONLINE</p>
 
         <p className="text-cyan-500 mt-4 tracking-widest">
-  AURA CONSCIOUSNESS STABLE
-</p>
+          AURA CONSCIOUSNESS STABLE
+        </p>
+
+        <p
+          style={{
+            color: "#c084fc",
+            fontWeight: "bold",
+            marginTop: "8px",
+          }}
+        >
+          COGNITIVE MODE
+        </p>
+
+        <p
+          style={{
+            color: "#ffffff",
+            letterSpacing: "3px",
+          }}
+        >
+          {currentMode.toUpperCase()}
+        </p>
       </div>
 
       <div className="core-metrics">
-
         <div>
           <h3>MODULES</h3>
-          <p></p>
         </div>
 
         <div>
           <h3>MEMORY</h3>
-          <p></p>
         </div>
 
         <div>
-          <h3></h3>
           <h3>LOGS</h3>
         </div>
 
         <div>
           <h3>ONLINE</h3>
         </div>
-
       </div>
 
+      <div className="text-xs tracking-[6px] mt-3">
+        CREATED BY ADAMYA
+      </div>
     </div>
   );
 }
-
-<div className="text-xs tracking-[6px] mt-3">
-  CREATED BY ADAMYA
-</div> 
 
 export default AICore;

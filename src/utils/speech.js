@@ -17,20 +17,20 @@ export function speakResponse(
   const voices =
     window.speechSynthesis.getVoices();
 
-  const jarvisVoice =
+  const auraVoice =
     voices.find(
       (voice) =>
         voice.name ===
         "Google UK English Male"
     );
 
-  if (jarvisVoice) {
-    utterance.voice = jarvisVoice;
+  if (auraVoice) {
+    utterance.voice = auraVoice;
   }
 
   utterance.lang = "en-GB";
 
-  // JARVIS tuning
+  // AURA tuning
   utterance.rate = 0.88;
   utterance.pitch = 0.82;
   utterance.volume = 1;

@@ -9,6 +9,7 @@ import NewsFeed from "./components/NewsFeed";
 import TaskPanel from "./components/TaskPanel";
 import LogsPanel from "./components/LogsPanel";
 import ConversationStream from "./components/ConversationStream";
+import NeuralActivity from "./components/NeuralActivity";
 
 
 function App() {
@@ -101,13 +102,14 @@ function App() {
           <NewsFeed />
         </div>
 
-        {/* SYSTEM LOGS */}
-        <div className="border border-purple-500 rounded-lg p-4 glow overflow-auto min-h-0">
-          <h2 className="text-2xl font-bold mb-4">
-            SYSTEM LOGS
-          </h2>
-          <LogsPanel />
-        </div>
+        {/* NEURAL ACTIVITY */}
+<div className="border border-purple-500 rounded-lg p-4 glow overflow-auto min-h-0">
+  <h2 className="text-2xl font-bold mb-4">
+    NEURAL ACTIVITY
+  </h2>
+
+  <NeuralActivity />
+</div>
 
         {/* TASK PANEL */}
         <div className="border border-cyan-500 rounded-lg p-4 glow">

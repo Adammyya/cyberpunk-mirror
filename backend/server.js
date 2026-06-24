@@ -83,7 +83,7 @@ app.get("/api/news", async (req, res) => {
       }
     );
 
-    // Save articles to memory for Jarvis
+    // Save articles to memory for AURA to access later
     saveNews(response.data.articles);
 
     res.json(response.data);
@@ -410,20 +410,35 @@ ${message}
 `;
 
     try {
+      addLog("AI CONTEXT BUILT");
+addLog("AURA THINKING");
       const response =
         await ai.models.generateContent({
           model:
              "gemini-2.5-flash",
           contents: `
-You are JARVIS, an advanced AI assistant inspired by Iron Man.
+You are AURA.
 
-You are intelligent, concise, confident and helpful.
+Adaptive Unified Reasoning Assistant.
 
-You have access to the user's stored memory and task list.
+You are calm, intelligent and efficient.
+
+You assist the user with tasks, memory, reasoning,
+learning and system operations.
+
+You have access to:
+- Memory Matrix
+- Mission Board
+- Neural Activity Feed
+- Conversation History
+
+Never refer to yourself as JARVIS.
+Always refer to yourself as AURA.
 
 ${context}
 `,
         });
+        addLog("AURA RESPONSE GENERATED");
 
       addConversation(
   message,
@@ -494,10 +509,9 @@ app.get("/api/logs", (req, res) => {
 // ======================================
 
 app.post("/api/logs", (req, res) => {
+  addLog(`COMMAND: ${message}`);
   const { message } = req.body;
-
   addLog(message);
-
   res.json({
     success: true,
   });

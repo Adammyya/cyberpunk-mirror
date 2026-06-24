@@ -10,6 +10,7 @@ import TaskPanel from "./components/TaskPanel";
 import LogsPanel from "./components/LogsPanel";
 import ConversationStream from "./components/ConversationStream";
 import NeuralActivity from "./components/NeuralActivity";
+import DiagnosticsPanel from "./components/DiagnosticsPanel";
 
 
 function App() {
@@ -101,8 +102,16 @@ function App() {
 
           <NewsFeed />
         </div>
+{/* AURA DIAGNOSTICS */}
+<div className="border border-purple-500 rounded-lg p-4 glow overflow-auto min-h-0">
+  <h2 className="text-2xl font-bold mb-4">
+    AURA DIAGNOSTICS
+  </h2>
 
-        {/* NEURAL ACTIVITY */}
+  <DiagnosticsPanel />
+</div>
+
+{/* NEURAL ACTIVITY */}
 <div className="border border-purple-500 rounded-lg p-4 glow overflow-auto min-h-0">
   <h2 className="text-2xl font-bold mb-4">
     NEURAL ACTIVITY

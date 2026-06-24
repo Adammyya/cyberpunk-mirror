@@ -13,6 +13,8 @@ import {addTask, getTasks, deleteTask,} from "./tasks.js";
 import {remember, recall, getAllMemory,} from "./memory.js";
 import {addLog, getLogs,} from "./logs.js";
 import {addConversation, getHistory,} from "./conversationMemory.js";
+import {setMode,  getMode, getPrompt,} from "./personality.js";
+import { runDiagnostics } from "./diagnostics.js";
 
 
 
@@ -375,6 +377,49 @@ app.post("/api/chat", async (req, res) => {
           `Top headline: ${news[0].title}`,
       });
     }
+    if (
+  text.includes("activate engineer mode")
+) {
+  setMode("engineer");
+
+  return res.json({
+    reply:
+      "Engineer Mode activated.",
+  });
+}
+
+if (
+  text.includes("activate mentor mode")
+) {
+  setMode("mentor");
+
+  return res.json({
+    reply:
+      "Mentor Mode activated.",
+  });
+}
+
+if (
+  text.includes("activate research mode")
+) {
+  setMode("research");
+
+  return res.json({
+    reply:
+      "Research Mode activated.",
+  });
+}
+
+if (
+  text.includes("activate creative mode")
+) {
+  setMode("creative");
+
+  return res.json({
+    reply:
+      "Creative Mode activated.",
+  });
+}
 
     // =====================
     // GEMINI + CONTEXT
@@ -417,26 +462,14 @@ addLog("AURA THINKING");
           model:
              "gemini-2.5-flash",
           contents: `
-You are AURA.
+${getPrompt()}
 
-Adaptive Unified Reasoning Assistant.
-
-You are calm, intelligent and efficient.
-
-You assist the user with tasks, memory, reasoning,
-learning and system operations.
-
-You have access to:
-- Memory Matrix
-- Mission Board
-- Neural Activity Feed
-- Conversation History
-
-Never refer to yourself as JARVIS.
-Always refer to yourself as AURA.
+CURRENT MODE:
+${getMode()}
 
 ${context}
-`,
+`
+
         });
         addLog("AURA RESPONSE GENERATED");
 
@@ -517,6 +550,19 @@ app.post("/api/logs", (req, res) => {
   });
 });
 
+// ======================================
+// DIAGNOSTICS API
+// ======================================
+
+app.get(
+  "/api/diagnostics",
+  (req, res) => {
+    const report =
+      runDiagnostics();
+
+    res.json(report);
+  }
+);
 
 // ======================================
 // CONVERSATION HISTORY API

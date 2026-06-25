@@ -333,3 +333,17 @@
     filter: brightness(1);
   }
 }
+
+.reactor {
+  transition: all 0.4s ease;
+}
+
+.reactor.idle {
+  filter: brightness(1);
+  transform: scale(1);
+}
+
+.reactor.thinking {
+  filter: brightness(1.8);
+  transform: scale(1.08);
+}

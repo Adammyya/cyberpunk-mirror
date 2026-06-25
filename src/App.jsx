@@ -11,7 +11,8 @@ import LogsPanel from "./components/LogsPanel";
 import ConversationStream from "./components/ConversationStream";
 import NeuralActivity from "./components/NeuralActivity";
 import DiagnosticsPanel from "./components/DiagnosticsPanel";
-
+import CognitiveProcess from "./components/CognitiveProcess";
+import ThinkingTrace from "./components/ThinkingTrace";
 
 function App() {
   const [time, setTime] = useState("");
@@ -117,7 +118,7 @@ function App() {
     NEURAL ACTIVITY
   </h2>
 
-  <NeuralActivity />
+  <ThinkingTrace />
 </div>
 
         {/* TASK PANEL */}
@@ -129,5 +130,14 @@ function App() {
     </div>
   );
 }
+
+ {/* COGNITIVE PROCESS */}
+<div className="border border-purple-500 rounded-lg p-4 glow overflow-auto min-h-0">
+  <h2 className="text-2xl font-bold mb-4">
+    COGNITIVE PROCESS
+  </h2>
+
+  <CognitiveProcess />
+</div>
 
 export default App;

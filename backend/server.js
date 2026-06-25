@@ -16,6 +16,9 @@ import {addConversation, getHistory,} from "./conversationMemory.js";
 import {setMode,  getMode, getPrompt,} from "./personality.js";
 import { runDiagnostics } from "./diagnostics.js";
 import {detectMode,} from "./cognitiveRouter.js";
+import {addThought,getThoughts,} from "./thoughts.js";
+import { pushThought, getThinkingSteps, clearThinkingSteps} from "./thinkingEngine.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 
@@ -149,6 +152,7 @@ addLog(
         reply: `Task added: ${task}`,
       });
     }
+    
 
     if (
       text.includes("show task") ||
@@ -433,11 +437,14 @@ if (
     // =====================
     // GEMINI + CONTEXT
     // =====================
+    
 
     const personalityPrompt = getPrompt();
+    pushThought("🧠 Searching Adamya's memory...");
 
     const memory =
       getAllMemory();
+      pushThought("Loading tasks...");
 
     const tasks =
       getTasks();
@@ -454,6 +461,7 @@ if (
       "AI context built"
     );
     
+    pushThought("🧠 Building cognitive context...");
     const context = `
 MEMORY:
 ${JSON.stringify(memory, null, 2)}
@@ -468,6 +476,38 @@ ${message}
     try {
       addLog("AI CONTEXT BUILT");
 addLog("AURA THINKING");
+addThought("Analyzing user query...");
+
+addThought(
+  `Selected ${getMode().toUpperCase()} mode.`
+);
+
+addThought(`Selected ${getMode()} personality.`);
+
+addThought("Loading memory...");
+
+addThought("Building AI context...");
+
+addThought("Generating response...");
+pushThought("Sending request to Gemini...");
+console.log("================================");
+console.log("MESSAGE:");
+console.log(message);
+
+console.log("================================");
+console.log("MODE:");
+console.log(getMode());
+
+console.log("================================");
+console.log("FULL PROMPT:");
+console.log(`
+${personalityPrompt}
+
+CURRENT MODE:
+${getMode()}
+
+${context}
+`);
       const response =
         await ai.models.generateContent({
           model:
@@ -482,11 +522,17 @@ ${context}
 `
 
         });
+        
+        pushThought("Receiving AI response...");
+        addThought("Response generated.");
+addThought("Updating conversation memory.");
         addLog("AURA RESPONSE GENERATED");
+        pushThought("Updating conversation memory...");
         addConversation(
            message,
            response.text
         );
+        pushThought("Response complete.");
 
 return res.json({
   reply: response.text,
@@ -536,6 +582,13 @@ app.post(
     });
   }
 );
+
+// ======================================
+// THINKING STEPS API
+// ======================================
+app.get("/api/thinking", (req, res) => {
+    res.json(getThinkingSteps());
+});
 
 
 // ======================================
@@ -642,6 +695,14 @@ app.get(
     res.json(getHistory());
   }
 );
+
+// ======================================
+// THOUGHTS API
+// ======================================
+
+app.get("/api/thoughts", (req, res) => {
+  res.json(getThoughts());
+});
 
 // ======================================
 // SERVER

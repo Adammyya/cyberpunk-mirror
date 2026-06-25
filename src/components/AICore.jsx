@@ -5,6 +5,21 @@ import PersonalityStatus from "./PersonalityStatus";
 function AICore() {
   const [currentMode, setCurrentMode] = useState("default");
 
+  // Reactor state
+  const [reactorState, setReactorState] = useState("idle");
+
+  // Temporary test
+  useEffect(() => {
+    setReactorState("thinking");
+
+    const timer = setTimeout(() => {
+      setReactorState("idle");
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Fetch personality mode
   useEffect(() => {
     const fetchMode = async () => {
       try {
@@ -25,18 +40,14 @@ function AICore() {
 
     fetchMode();
 
-    const interval = setInterval(
-      fetchMode,
-      3000
-    );
+    const interval = setInterval(fetchMode, 3000);
 
-    return () =>
-      clearInterval(interval);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="ai-core-container">
-      <div className="reactor">
+      <div className={`reactor ${reactorState}`}>
         <div className="hud-ring"></div>
 
         <div className="ring ring1"></div>
@@ -60,9 +71,7 @@ function AICore() {
         AURA
       </h2>
 
-      <PersonalityStatus
-        currentMode={currentMode}
-      />
+      <PersonalityStatus currentMode={currentMode} />
 
       <div className="core-status">
         <p>CONSCIOUSNESS ACTIVE</p>

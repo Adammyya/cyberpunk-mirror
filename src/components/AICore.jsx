@@ -48,6 +48,7 @@ function AICore() {
   return (
     <div className="ai-core-container">
       <div className={`reactor ${reactorState}`}>
+        <div className="energy-halo"></div>
         <div className="hud-ring"></div>
 
         <div className="ring ring1"></div>
@@ -58,6 +59,12 @@ function AICore() {
         <div className="scan-line"></div>
 
         <div className="core"></div>
+        <div className="particle p1"></div>
+<div className="particle p2"></div>
+<div className="particle p3"></div>
+<div className="particle p4"></div>
+<div className="particle p5"></div>
+<div className="particle p6"></div>
 
         <div className="node node1"></div>
         <div className="node node2"></div>
@@ -121,7 +128,7 @@ function AICore() {
       </div>
 
       <div className="text-xs tracking-[6px] mt-3">
-        CREATED BY ADAMYA
+        CREATED BY Adamya Pandey 
       </div>
     </div>
   );

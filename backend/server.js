@@ -19,6 +19,9 @@ import {detectMode,} from "./cognitiveRouter.js";
 import {addThought,getThoughts,} from "./thoughts.js";
 import { pushThought, getThinkingSteps, clearThinkingSteps} from "./thinkingEngine.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import {setReactorState,getReactorState,} from "./reactor.js";
+import {setState,getState} from "./stateEngine.js";
+
 
 
 
@@ -508,6 +511,12 @@ ${getMode()}
 
 ${context}
 `);
+setReactorState("thinking");
+await new Promise((resolve) =>
+  setTimeout(resolve, 3000)
+);
+
+setState("thinking");
       const response =
         await ai.models.generateContent({
           model:
@@ -522,6 +531,8 @@ ${context}
 `
 
         });
+        setState("idle");
+        setReactorState("idle");
         
         pushThought("Receiving AI response...");
         addThought("Response generated.");
@@ -583,6 +594,19 @@ app.post(
   }
 );
 
+//======================================
+// STATE API
+//======================================
+app.get("/api/state",(req,res)=>{
+
+    res.json({
+
+        state:getState()
+
+    });
+
+});
+
 // ======================================
 // THINKING STEPS API
 // ======================================
@@ -590,6 +614,14 @@ app.get("/api/thinking", (req, res) => {
     res.json(getThinkingSteps());
 });
 
+// ======================================
+// REACTOR API
+// ======================================
+app.get("/api/reactor", (req, res) => {
+  res.json({
+    state: getReactorState(),
+  });
+});
 
 // ======================================
 // MEMORY API

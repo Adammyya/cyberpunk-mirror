@@ -58,9 +58,16 @@
    RINGS
 ================================== */
 
-.ring {
-  position: absolute;
-  border-radius: 50%;
+.ring{
+
+position:absolute;
+
+border-radius:50%;
+
+box-shadow:
+0 0 10px rgba(192,132,252,.3),
+inset 0 0 8px rgba(255,255,255,.15);
+
 }
 
 /* INNER */
@@ -72,7 +79,9 @@
   border-top: 4px solid var(--aura-blue);
   border-right: 4px solid var(--aura-blue);
 
-  animation: rotateClockwise 5s linear infinite;
+  animation:
+rotate 10s linear infinite,
+ringPulse 4s ease-in-out infinite;
 }
 
 /* MID */
@@ -84,7 +93,8 @@
   border-left: 3px solid var(--aura-violet);
   border-bottom: 3px solid var(--aura-violet);
 
-  animation: rotateAnti 8s linear infinite;
+  animation: rotateReverse 18s linear infinite,
+ringPulse 6s ease-in-out infinite;
 }
 
 /* OUTER */
@@ -96,7 +106,8 @@
   border-top: 2px solid var(--aura-blue);
   border-bottom: 2px solid var(--aura-blue);
 
-  animation: rotateClockwise 12s linear infinite;
+  animation: rotate 26s linear infinite,
+ringPulse 5s ease-in-out infinite;
 }
 
 /* DASHED */
@@ -107,7 +118,44 @@
 
   border: 2px dashed rgba(168, 85, 247, 0.35);
 
-  animation: rotateAnti 20s linear infinite;
+
+  animation: rotateReverse 40s linear infinite,
+ringPulse 8s ease-in-out infinite;
+}
+
+@keyframes ringPulse{
+
+0%{
+
+box-shadow:
+0 0 8px rgba(192,132,252,.15),
+inset 0 0 6px rgba(255,255,255,.05);
+
+opacity:.7;
+
+}
+
+50%{
+
+box-shadow:
+0 0 18px rgba(192,132,252,.55),
+0 0 30px rgba(192,132,252,.3),
+inset 0 0 12px rgba(255,255,255,.15);
+
+opacity:1;
+
+}
+
+100%{
+
+box-shadow:
+0 0 8px rgba(192,132,252,.15),
+inset 0 0 6px rgba(255,255,255,.05);
+
+opacity:.7;
+
+}
+
 }
 
 /* ==================================
@@ -134,27 +182,87 @@
    CORE
 ================================== */
 
-.core {
-  position: absolute;
+.core{
 
-  width: 42px;
-  height: 42px;
+position:absolute;
 
-  border-radius: 50%;
+width:46px;
+height:46px;
 
-  background: radial-gradient(
-    circle,
-    var(--aura-white) 0%,
-    #d8b4fe 35%,
-    var(--aura-violet) 100%
-  );
+border-radius:50%;
 
-  box-shadow:
-    0 0 15px var(--aura-white),
-    0 0 35px var(--aura-lavender),
-    0 0 70px var(--aura-violet);
+background:
+radial-gradient(
+circle,
+#ffffff 0%,
+#ffe9ff 15%,
+#f5d0fe 35%,
+#d8b4fe 55%,
+#a855f7 100%
+);
 
-  animation: pulse 2s ease-in-out infinite;
+box-shadow:
+0 0 20px #ffffff,
+0 0 45px #d8b4fe,
+0 0 80px rgba(192,132,252,.8);
+
+animation:
+coreBreath 5s ease-in-out infinite;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+.core::after{
+
+content:"";
+
+width:10px;
+height:10px;
+
+border-radius:50%;
+
+background:white;
+
+box-shadow:
+
+0 0 15px white,
+
+0 0 30px #d8b4fe;
+
+animation:
+irisPulse 2.5s ease-in-out infinite;
+
+}
+
+@keyframes irisPulse{
+
+0%{
+
+transform:scale(.8);
+
+opacity:.6;
+
+}
+
+50%{
+
+transform:scale(1.5);
+
+opacity:1;
+
+}
+
+100%{
+
+transform:scale(.8);
+
+opacity:.6;
+
+}
+
 }
 
 /* ==================================
@@ -346,4 +454,192 @@
 .reactor.thinking {
   filter: brightness(1.8);
   transform: scale(1.08);
+}
+
+/* =========================================
+   FLOATING ENERGY PARTICLES
+========================================= */
+
+.particle{
+    position:absolute;
+
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:radial-gradient(
+circle,
+#ffffff 0%,
+#d8b4fe 60%,
+#a855f7 100%
+);
+
+    box-shadow:
+        0 0 10px #d8b4fe,
+        0 0 20px #d8b4fe,
+        0 0 30px #c084fc;
+
+    animation:
+        orbit linear infinite,
+        twinkle ease-in-out infinite;
+}
+
+/* ---------- Individual Particles ---------- */
+
+.p1{
+    --radius:95px;
+    animation-duration:8s,2s;
+    animation-delay:0s,-1s;
+}
+
+.p2{
+    --radius:120px;
+    animation-duration:12s,3s;
+    animation-delay:-2s,-0.5s;
+    animation-direction:reverse,normal;
+}
+
+.p3{
+    --radius:80px;
+    animation-duration:10s,2.5s;
+    animation-delay:-4s,-1.5s;
+}
+
+.p4{
+    --radius:140px;
+    animation-duration:16s,4s;
+    animation-delay:-7s,-2s;
+    animation-direction:reverse,normal;
+}
+
+.p5{
+    --radius:105px;
+    animation-duration:9s,2.8s;
+    animation-delay:-3s,-1s;
+}
+
+.p6{
+    --radius:130px;
+    animation-duration:14s,3.5s;
+    animation-delay:-6s,-2.5s;
+    animation-direction:reverse,normal;
+}
+
+/* ---------- Orbit ---------- */
+
+@keyframes orbit{
+
+    from{
+
+        transform:
+        rotate(0deg)
+        translateX(var(--radius))
+        rotate(0deg);
+
+    }
+
+    to{
+
+        transform:
+        rotate(360deg)
+        translateX(var(--radius))
+        rotate(-360deg);
+
+    }
+
+}
+
+/* ---------- Twinkle ---------- */
+
+@keyframes twinkle{
+
+    0%{
+
+        opacity:.3;
+        transform:scale(.7);
+
+    }
+
+    50%{
+
+        opacity:1;
+        transform:scale(1.4);
+
+    }
+
+    100%{
+
+        opacity:.3;
+        transform:scale(.7);
+
+    }
+
+}
+
+.energy-halo{
+
+position:absolute;
+
+top:50%;
+left:50%;
+
+width:260px;
+height:260px;
+
+transform:translate(-50%,-50%);
+
+border-radius:50%;
+
+background:
+radial-gradient(
+circle,
+rgba(192,132,252,.18) 0%,
+rgba(168,85,247,.08) 45%,
+transparent 75%
+);
+
+filter:blur(22px);
+
+animation:
+haloBreath 7s ease-in-out infinite;
+
+pointer-events:none;
+
+z-index:-1;
+
+}
+
+@keyframes haloBreath{
+
+0%{
+
+transform:
+translate(-50%,-50%)
+scale(1);
+
+opacity:.45;
+
+}
+
+50%{
+
+transform:
+translate(-50%,-50%)
+scale(1.18);
+
+opacity:.8;
+
+}
+
+100%{
+
+transform:
+translate(-50%,-50%)
+scale(1);
+
+opacity:.45;
+
+}
+
 }

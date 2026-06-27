@@ -101,3 +101,34 @@ Every subsystem should be designed so it can grow over multiple years without re
 | Desktop Automation | ⚪ Not Started |
 | Vision | ⚪ Not Started |
 | Hardware | ⚪ Future |
+
+# Changelog
+
+---
+
+## Session 06 — Adaptive Reactor & Documentation
+
+### Added
+
+- Backend state synchronization with frontend
+- Adaptive reactor (`idle` ↔ `thinking`)
+- Neural pulse wave animation
+- Dynamic halo behavior
+- State-driven reactor animations
+
+### Improved
+
+- Removed square glow artifact
+- Refined reactor visual language
+- Improved animation architecture
+
+### Documentation
+
+- Created `MASTER_DOCUMENTATION.md`
+- Created `ROADMAP.md`
+- Created `CHANGELOG.md`
+
+### Architecture
+
+- Established backend → state engine → frontend synchronization
+- Reactor now reflects AURA's cognitive state in real time

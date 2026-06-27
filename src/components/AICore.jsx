@@ -7,6 +7,33 @@ function AICore() {
 
   // Reactor state
   const [reactorState, setReactorState] = useState("idle");
+  useEffect(() => {
+  const fetchReactorState = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/state"
+      );
+
+      const data = await response.json();
+
+      setReactorState(data.state);
+    } catch (error) {
+      console.error(
+        "Error fetching reactor state:",
+        error
+      );
+    }
+  };
+
+  fetchReactorState();
+
+  const interval = setInterval(
+    fetchReactorState,
+    300
+  );
+
+  return () => clearInterval(interval);
+}, []);
 
   // Temporary test
   useEffect(() => {
@@ -49,6 +76,7 @@ function AICore() {
     <div className="ai-core-container">
       <div className={`reactor ${reactorState}`}>
         <div className="energy-halo"></div>
+        <div className="pulse-wave"></div>
         <div className="hud-ring"></div>
 
         <div className="ring ring1"></div>
@@ -76,6 +104,15 @@ function AICore() {
 
       <h2 className="core-title">
         AURA
+        <p
+  style={{
+    color: "#00ffff",
+    marginTop: "8px",
+    letterSpacing: "3px",
+  }}
+>
+  STATE : {reactorState.toUpperCase()}
+</p>
       </h2>
 
       <PersonalityStatus currentMode={currentMode} />

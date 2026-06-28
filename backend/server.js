@@ -110,6 +110,10 @@ app.get("/api/news", async (req, res) => {
 // ======================================
 // GEMINI CHAT API
 // ======================================
+// ======================================
+// GEMINI CHAT API
+// ======================================
+
 app.post("/api/chat", async (req, res) => {
   try {
     const { message } = req.body;
@@ -121,20 +125,23 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const text = message.toLowerCase();
-    const mode =
-  detectMode(message);
 
-setMode(mode);
+    // =========================
+    // COGNITIVE MODE
+    // =========================
 
-addLog(
-  `COGNITIVE SHIFT -> ${mode}`
-);
+    const mode = detectMode(message);
 
-    // =====================
+    setMode(mode);
+
+    addLog(`COGNITIVE SHIFT -> ${mode}`);
+
+    // =========================
     // TASKS
-    // =====================
+    // =========================
 
     if (text.startsWith("add task")) {
+
       const task = message
         .replace(/add task/i, "")
         .trim();
@@ -147,15 +154,12 @@ addLog(
 
       addTask(task);
 
-      addLog(
-        `Task added: ${task}`
-      );
+      addLog(`Task added: ${task}`);
 
       return res.json({
         reply: `Task added: ${task}`,
       });
     }
-    
 
     if (
       text.includes("show task") ||
@@ -163,6 +167,7 @@ addLog(
       text.includes("show my task") ||
       text.includes("show my tasks")
     ) {
+
       const tasks = getTasks();
 
       if (!tasks.length) {
@@ -185,6 +190,7 @@ addLog(
       text.match(/delete task (\d+)/);
 
     if (deleteMatch) {
+
       const taskNumber =
         parseInt(deleteMatch[1]) - 1;
 
@@ -203,17 +209,15 @@ addLog(
           : "Task not found.",
       });
     }
-
-    // =====================
+        // =========================
     // MEMORY
-    // =====================
+    // =========================
 
     const rememberMatch =
-      message.match(
-        /remember my (.+?) is (.+)/i
-      );
+      message.match(/remember my (.+?) is (.+)/i);
 
     if (rememberMatch) {
+
       const key =
         rememberMatch[1].trim();
 
@@ -222,9 +226,7 @@ addLog(
 
       remember(key, value);
 
-      addLog(
-        `Memory updated: ${key}`
-      );
+      addLog(`Memory updated: ${key}`);
 
       return res.json({
         reply:
@@ -233,11 +235,10 @@ addLog(
     }
 
     const recallMatch =
-      message.match(
-        /what is my (.+)/i
-      );
+      message.match(/what is my (.+)/i);
 
     if (recallMatch) {
+
       const key =
         recallMatch[1].trim();
 
@@ -252,25 +253,14 @@ addLog(
     }
 
     if (
-      text.includes(
-        "what do you know about me"
-      )
+      text.includes("what do you know about me")
     ) {
+
       const memory =
         getAllMemory();
 
-      const entries =
-        Object.entries(memory);
-
-      if (!entries.length) {
-        return res.json({
-          reply:
-            "I don't know anything about you yet.",
-        });
-      }
-
       const profile =
-        entries
+        Object.entries(memory)
           .map(
             ([key, value]) =>
               `${key}: ${value}`
@@ -279,20 +269,21 @@ addLog(
 
       return res.json({
         reply:
-          `Here's what I know:\n\n${profile}`,
+          profile.length
+            ? `Here's what I know:\n\n${profile}`
+            : "I don't know anything about you yet.",
       });
     }
 
-    // =====================
+    // =========================
     // NAME MEMORY
-    // =====================
+    // =========================
 
     const nameMatch =
-      message.match(
-        /my name is (.+)/i
-      );
+      message.match(/my name is (.+)/i);
 
     if (nameMatch) {
+
       const name =
         nameMatch[1].trim();
 
@@ -305,166 +296,158 @@ addLog(
     }
 
     if (
-      text.includes(
-        "what is my name"
-      ) ||
-      text.includes(
-        "what's my name"
-      )
+      text.includes("what is my name") ||
+      text.includes("what's my name")
     ) {
+
       const name =
         recall("name");
 
       return res.json({
-        reply: name
-          ? `Your name is ${name}.`
-          : "I don't know your name yet.",
+        reply:
+          name
+            ? `Your name is ${name}.`
+            : "I don't know your name yet.",
       });
     }
-
-    // =====================
+        // =========================
     // INTENT ROUTER
-    // =====================
+    // =========================
 
-    const intent =
-      detectIntent(message);
+    const intent = detectIntent(message);
 
-    console.log(
-      "MESSAGE:",
-      message
-    );
+    console.log("MESSAGE:", message);
+    console.log("INTENT:", intent);
 
-    console.log(
-      "INTENT:",
-      intent
-    );
-
+    // -------------------------
     // WEATHER
+    // -------------------------
 
     if (intent === "weather") {
-      const weather =
-        await getWeather();
 
-      addLog(
-        "Weather request processed"
-      );
+      const weather = await getWeather();
+
+      addLog("Weather request processed");
 
       return res.json({
         reply:
           `Current temperature is ${weather.temperature}°C. Wind speed is ${weather.windspeed} km/h.`,
       });
+
     }
 
+    // -------------------------
     // SYSTEM
+    // -------------------------
 
     if (intent === "system") {
-      const stats =
-        await getSystemInfo();
 
-      addLog(
-        "System status requested"
-      );
+      const stats = await getSystemInfo();
+
+      addLog("System status requested");
 
       return res.json({
         reply:
           `CPU usage is ${stats.cpu}%. RAM usage is ${stats.ram}%. Battery is ${stats.battery}%.`,
       });
+
     }
 
+    // -------------------------
     // NEWS
+    // -------------------------
 
     if (intent === "news") {
-      const news =
-        getNews();
 
-      addLog(
-        "News requested"
-      );
+      const news = getNews();
+
+      addLog("News requested");
 
       if (!news.length) {
         return res.json({
-          reply:
-            "No news available.",
+          reply: "No news available.",
         });
       }
 
       return res.json({
-        reply:
-          `Top headline: ${news[0].title}`,
+        reply: `Top headline: ${news[0].title}`,
       });
+
     }
-    if (
-  text.includes("activate engineer mode")
-) {
-  setMode("engineer");
 
-  return res.json({
-    reply:
-      "Engineer Mode activated.",
-  });
-}
+    // -------------------------
+    // MANUAL PERSONALITY MODES
+    // -------------------------
 
-if (
-  text.includes("activate mentor mode")
-) {
-  setMode("mentor");
+    if (text.includes("activate engineer mode")) {
 
-  return res.json({
-    reply:
-      "Mentor Mode activated.",
-  });
-}
+      setMode("engineer");
 
-if (
-  text.includes("activate research mode")
-) {
-  setMode("research");
+      return res.json({
+        reply: "Engineer Mode activated.",
+      });
 
-  return res.json({
-    reply:
-      "Research Mode activated.",
-  });
-}
+    }
 
-if (
-  text.includes("activate creative mode")
-) {
-  setMode("creative");
+    if (text.includes("activate mentor mode")) {
 
-  return res.json({
-    reply:
-      "Creative Mode activated.",
-  });
-}
+      setMode("mentor");
 
-    // =====================
-    // GEMINI + CONTEXT
-    // =====================
-    
+      return res.json({
+        reply: "Mentor Mode activated.",
+      });
+
+    }
+
+    if (text.includes("activate research mode")) {
+
+      setMode("research");
+
+      return res.json({
+        reply: "Research Mode activated.",
+      });
+
+    }
+
+    if (text.includes("activate creative mode")) {
+
+      setMode("creative");
+
+      return res.json({
+        reply: "Creative Mode activated.",
+      });
+
+    }
+        // =========================
+    // COGNITIVE PIPELINE
+    // =========================
+
+    addLog("Intent analysis started");
 
     const personalityPrompt = getPrompt();
-    pushThought("🧠 Searching Adamya's memory...");
 
-    const memory =
-      getAllMemory();
-      pushThought("Loading tasks...");
+    addLog(`Cognitive mode selected: ${getMode()}`);
 
-    const tasks =
-      getTasks();
+    pushThought("🧠 Understanding your request...");
 
-    addLog(
-      "Memory loaded"
-    );
+    pushThought("🧠 Identifying your intent...");
 
-    addLog(
-      "Tasks loaded"
-    );
+    pushThought("🧠 Searching relevant memories...");
 
-    addLog(
-      "AI context built"
-    );
-    
-    pushThought("🧠 Building cognitive context...");
+    const memory = getAllMemory();
+
+    pushThought("📋 Reviewing active objectives...");
+
+    const tasks = getTasks();
+
+    addLog("Relevant memories retrieved");
+
+    addLog("Active tasks synchronized");
+
+    pushThought("🧠 Integrating knowledge and memory...");
+
+    addLog("Reasoning context assembled");
+
     const context = `
 MEMORY:
 ${JSON.stringify(memory, null, 2)}
@@ -476,34 +459,25 @@ CURRENT USER MESSAGE:
 ${message}
 `;
 
-    try {
-      addLog("AI CONTEXT BUILT");
-addLog("AURA THINKING");
-addThought("Analyzing user query...");
+    addLog("Reasoning engine activated");
 
-addThought(
-  `Selected ${getMode().toUpperCase()} mode.`
-);
+    addThought("Analyzing user query...");
 
-addThought(`Selected ${getMode()} personality.`);
+    addThought(`Selected ${getMode().toUpperCase()} mode.`);
 
-addThought("Loading memory...");
+    pushThought("⚡ Activating reasoning engine...");
 
-addThought("Building AI context...");
+    console.log("================================");
+    console.log("MESSAGE:");
+    console.log(message);
 
-addThought("Generating response...");
-pushThought("Sending request to Gemini...");
-console.log("================================");
-console.log("MESSAGE:");
-console.log(message);
+    console.log("================================");
+    console.log("MODE:");
+    console.log(getMode());
 
-console.log("================================");
-console.log("MODE:");
-console.log(getMode());
-
-console.log("================================");
-console.log("FULL PROMPT:");
-console.log(`
+    console.log("================================");
+    console.log("FULL PROMPT:");
+    console.log(`
 ${personalityPrompt}
 
 CURRENT MODE:
@@ -511,17 +485,19 @@ ${getMode()}
 
 ${context}
 `);
-setReactorState("thinking");
-await new Promise((resolve) =>
-  setTimeout(resolve, 3000)
-);
 
-setState("thinking");
-      const response =
-        await ai.models.generateContent({
-          model:
-             "gemini-2.5-flash",
-          contents: `
+    setState("thinking");
+
+    await new Promise(resolve =>
+      setTimeout(resolve, 3000)
+    );
+
+    const response =
+      await ai.models.generateContent({
+
+        model: "gemini-2.5-flash",
+
+        contents: `
 ${personalityPrompt}
 
 CURRENT MODE:
@@ -530,227 +506,38 @@ ${getMode()}
 ${context}
 `
 
-        });
-        setState("idle");
-        setReactorState("idle");
-        
-        pushThought("Receiving AI response...");
-        addThought("Response generated.");
-addThought("Updating conversation memory.");
-        addLog("AURA RESPONSE GENERATED");
-        pushThought("Updating conversation memory...");
-        addConversation(
-           message,
-           response.text
-        );
-        pushThought("Response complete.");
-
-return res.json({
-  reply: response.text,
-});
-
-    } catch (error) {
-      console.error(
-        "GEMINI ERROR:"
-      );
-
-      console.error(error);
-
-      return res.json({
-        reply:
-          "I'm currently experiencing heavy load from the AI core. Please try again in a few moments.",
       });
-    }
 
-  } catch (error) {
+    pushThought("✨ Synthesizing response...");
+
+    addThought("Response generated.");
+
+    addLog("Response synthesis complete");
+
+    pushThought("🧠 Consolidating new memory...");
+
+    addConversation(
+      message,
+      response.text
+    );
+
+    setState("idle");
+
+    return res.json({
+      reply: response.text,
+    });
+      } catch (error) {
+
+    setState("error");
+
+    console.error("GEMINI ERROR:");
     console.error(error);
 
     return res.status(500).json({
-      error: error.message,
-    });
-  }
-});
-
-// ======================================
-// PERSONALITY reSET API
-// ======================================
-
-app.post(
-  "/api/personality",
-  (req, res) => {
-
-    const { mode } = req.body;
-
-    setMode(mode);
-
-    addLog(
-      `COGNITIVE SHIFT -> ${mode}`
-    );
-
-    res.json({
-      success: true,
-      mode,
-    });
-  }
-);
-
-//======================================
-// STATE API
-//======================================
-app.get("/api/state",(req,res)=>{
-
-    res.json({
-
-        state:getState()
-
+      reply:
+        "I'm currently experiencing heavy load from the AI core. Please try again in a few moments.",
     });
 
-});
-
-// ======================================
-// THINKING STEPS API
-// ======================================
-app.get("/api/thinking", (req, res) => {
-    res.json(getThinkingSteps());
-});
-
-// ======================================
-// REACTOR API
-// ======================================
-app.get("/api/reactor", (req, res) => {
-  res.json({
-    state: getReactorState(),
-  });
-});
-
-// ======================================
-// MEMORY API
-// ======================================
-
-app.get("/api/memory", (req, res) => {
-  const memory = getAllMemory();
-
-  res.json(memory);
-});
-
-app.get("/api/tasks", (req, res) => {
-  res.json(getTasks());
-});
-// ======================================
-// PERSONALITY API
-// ======================================
-app.get(
-  "/api/personality",
-  (req, res) => {
-    res.json({
-      mode: getMode(),
-    });
   }
-);
 
-app.post("/api/personality", (req, res) => {
-  const { mode } = req.body;
-
-  setMode(mode);
-
-  addLog(
-    `COGNITIVE SHIFT -> ${mode}`
-  );
-
-  res.json({
-    success: true,
-    mode,
-  });
-});
-// ======================================
-// TEST JSON API
-// ======================================
-
-
-
-// ======================================
-// LOGS API
-// ======================================
-
-app.get("/api/logs", (req, res) => {
-  res.json(getLogs());
-});
-
-// ======================================
-// CONVERSATION HISTORY API
-// ======================================
-
-app.post("/api/logs", (req, res) => {
-  addLog(`COMMAND: ${message}`);
-  const { message } = req.body;
-  addLog(message);
-  res.json({
-    success: true,
-  });
-});
-
-// ======================================
-// DIAGNOSTICS API
-// ======================================
-
-app.get(
-  "/api/diagnostics",
-  (req, res) => {
-    const report =
-      runDiagnostics();
-
-    res.json(report);
-  }
-);
-
-// ======================================
-// CONVERSATION HISTORY API
-// ====================================== 
-app.get("/api/conversation", (req, res) => {
-  res.json(getHistory());
-});
-
-// ======================================
-// TEST CONVERSATION API
-// ======================================
-app.get("/api/test-conversation", (req, res) => {
-  addConversation("hello", "world");
-
-  console.log(getHistory());
-
-  res.json(getHistory());
-});
-
-app.get(
-  "/api/conversation",
-  (req, res) => {
-    res.json(getHistory());
-  }
-);
-
-// ======================================
-// THOUGHTS API
-// ======================================
-
-app.get("/api/thoughts", (req, res) => {
-  res.json(getThoughts());
-});
-
-// ======================================
-// SERVER
-// ======================================
-
-const PORT = 5000;
-app.post("/testjson", (req, res) => {
-  console.log(req.body);
-
-  res.json({
-    received: req.body,
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(
-    `Server running on port ${PORT}`
-  );
 });

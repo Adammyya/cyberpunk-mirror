@@ -22,6 +22,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import {setReactorState,getReactorState,} from "./reactor.js";
 import {setState,getState} from "./stateEngine.js";
 import { extractMemory } from "./memoryExtractor.js";
+import chatRouter from "./routes/chat.js";
 
 
 
@@ -685,6 +686,7 @@ app.post("/testjson", (req, res) => {
 // ======================================
 
 const PORT = process.env.PORT || 5000;
+app.use("/api/chat", chatRouter);
 
 app.listen(PORT, () => {
   console.log("");

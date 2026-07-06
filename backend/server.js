@@ -116,7 +116,7 @@ app.get("/api/news", async (req, res) => {
 // GEMINI CHAT API
 // ======================================
 
-app.post("/api/chat", async (req, res) => {
+/* app.post("/api/chat", async (req, res) => {
   try {
     const { message } = req.body;
     extractMemory(message);
@@ -560,7 +560,7 @@ return res.json({
 
 }
 
-});
+}); */
 
 // ======================================
 // REACTOR STATE API

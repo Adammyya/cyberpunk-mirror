@@ -131,13 +131,5 @@ function App() {
   );
 }
 
- {/* COGNITIVE PROCESS */}
-<div className="border border-purple-500 rounded-lg p-4 glow overflow-auto min-h-0">
-  <h2 className="text-2xl font-bold mb-4">
-    COGNITIVE PROCESS
-  </h2>
-
-  <CognitiveProcess />
-</div>
 
 export default App;

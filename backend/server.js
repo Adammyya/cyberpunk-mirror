@@ -21,6 +21,7 @@ import { pushThought, getThinkingSteps, clearThinkingSteps} from "./thinkingEngi
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import {setReactorState,getReactorState,} from "./reactor.js";
 import {setState,getState} from "./stateEngine.js";
+import { extractMemory } from "./memoryExtractor.js";
 
 
 
@@ -117,6 +118,7 @@ app.get("/api/news", async (req, res) => {
 app.post("/api/chat", async (req, res) => {
   try {
     const { message } = req.body;
+    extractMemory(message);
 
     if (!message) {
       return res.status(400).json({
@@ -507,6 +509,11 @@ ${context}
 `
 
       });
+      console.log("========== RAW GEMINI RESPONSE ==========");
+console.dir(response, { depth: null });
+console.log("========================================");
+      console.log("✅ Gemini responded");
+console.log(response);
 
     pushThought("✨ Synthesizing response...");
 
@@ -515,29 +522,174 @@ ${context}
     addLog("Response synthesis complete");
 
     pushThought("🧠 Consolidating new memory...");
+    const reply = response.text;
 
-    addConversation(
-      message,
-      response.text
-    );
+console.log("✅ Gemini responded");
+console.log("REPLY:");
+console.log(reply);
 
-    setState("idle");
+pushThought("✨ Synthesizing response...");
+addThought("Response generated.");
+addLog("Response synthesis complete");
 
-    return res.json({
-      reply: response.text,
-    });
-      } catch (error) {
+pushThought("🧠 Consolidating new memory...");
 
-    setState("error");
+addConversation(
+  message,
+  reply
+);
 
-    console.error("GEMINI ERROR:");
-    console.error(error);
+setState("idle");
 
-    return res.status(500).json({
-      reply:
-        "I'm currently experiencing heavy load from the AI core. Please try again in a few moments.",
-    });
+return res.json({
+  reply,
+});
 
-  }
+} catch (error) {
 
+  setState("error");
+
+  console.error("GEMINI ERROR:");
+  console.error(error);
+
+  return res.status(500).json({
+    reply:
+      "I'm currently experiencing heavy load from the AI core. Please try again in a few moments.",
+  });
+
+}
+
+});
+
+// ======================================
+// REACTOR STATE API
+// ======================================
+
+app.get("/api/state", (req, res) => {
+  res.json({
+    state: getState(),
+  });
+});
+
+app.get("/api/reactor", (req, res) => {
+  res.json({
+    state: getReactorState(),
+  });
+});
+
+// ======================================
+// PERSONALITY API
+// ======================================
+
+app.get("/api/personality", (req, res) => {
+  res.json({
+    mode: getMode(),
+  });
+});
+
+app.post("/api/personality", (req, res) => {
+  const { mode } = req.body;
+
+  setMode(mode);
+
+  addLog(`COGNITIVE SHIFT -> ${mode}`);
+
+  res.json({
+    success: true,
+    mode,
+  });
+});
+
+// ======================================
+// THOUGHTS API
+// ======================================
+
+app.get("/api/thoughts", (req, res) => {
+  res.json(getThoughts());
+});
+
+// ======================================
+// THINKING ENGINE API
+// ======================================
+
+app.get("/api/thinking", (req, res) => {
+  res.json(getThinkingSteps());
+});
+
+app.delete("/api/thinking", (req, res) => {
+  clearThinkingSteps();
+
+  res.json({
+    success: true,
+  });
+});
+
+// ======================================
+// LOGS API
+// ======================================
+
+app.get("/api/logs", (req, res) => {
+  res.json(getLogs());
+});
+
+app.post("/api/logs", (req, res) => {
+
+  const { message } = req.body;
+
+  addLog(`COMMAND: ${message}`);
+
+  res.json({
+    success: true,
+  });
+
+});
+
+// ======================================
+// CONVERSATION HISTORY API
+// ======================================
+
+app.get("/api/conversation", (req, res) => {
+  res.json(getHistory());
+});
+
+app.get("/api/test-conversation", (req, res) => {
+  addConversation("hello", "world");
+
+  console.log(getHistory());
+
+  res.json(getHistory());
+});
+
+// ======================================
+// DIAGNOSTICS API
+// ======================================
+
+app.get("/api/diagnostics", (req, res) => {
+  const report = runDiagnostics();
+
+  res.json(report);
+});
+// ======================================
+// TEST JSON API
+// ======================================
+
+app.post("/testjson", (req, res) => {
+  console.log(req.body);
+
+  res.json({
+    received: req.body,
+  });
+});
+// ======================================
+// SERVER
+// ======================================
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log("");
+  console.log("========================================");
+  console.log("🟣 AURA CORE ONLINE");
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log("========================================");
 });

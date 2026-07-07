@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./styles/glass.css";
 import UserProfile from "./components/UserProfile";
 import Header from "./components/Header";
 import AICore from "./components/AICore";
@@ -30,7 +31,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen w-screen bg-black text-purple-300 p-4 overflow-hidden">
+    <div className="min-h-screen w-screen p-4 overflow-hidden text-[var(--text-primary)]">
 
       {/* HEADER */}
       <Header />
@@ -44,8 +45,8 @@ function App() {
 >
 
         {/* CLOCK */}
-        <div className="border border-purple-500 rounded-lg p-4 glow min-h-0">
-          <h2 className="text-2xl font-bold mb-4">
+        <div className="aura-panel p-4 min-h-0">
+          <h2 className="panel-title">
             CLOCK
           </h2>
 
@@ -59,13 +60,13 @@ function App() {
         </div>
 
         {/* AI CORE */}
-        <div className="border border-purple-500 rounded-lg glow flex items-center justify-center overflow-hidden min-h-0">
+        <div className="aura-panel glow flex items-center justify-center overflow-hidden min-h-0">
           <AICore />
         </div>
 
         {/* WEATHER */}
-        <div className="border border-purple-500 rounded-lg p-4 glow min-h-0">
-          <h2 className="text-2xl font-bold mb-4">
+        <div className="aura-panel p-4 min-h-0">
+          <h2 className="panel-title">
             WEATHER
           </h2>
 
@@ -73,8 +74,8 @@ function App() {
         </div>
 
         {/* SYSTEM STATUS */}
-        <div className="border border-purple-500 rounded-lg p-4 glow min-h-0">
-          <h2 className="text-2xl font-bold mb-4">
+        <div className="aura-panel p-4 min-h-0">
+          <h2 className="panel-title">
             SYSTEM STATUS
           </h2>
 
@@ -82,8 +83,8 @@ function App() {
         </div>
 
         {/* VOICE MODULE */}
-        <div className="border border-purple-500 rounded-lg p-4 glow min-h-0">
-          <h2 className="text-2xl font-bold mb-4">
+        <div className="aura-panel p-4 min-h-0">
+          <h2 className="panel-title">
             VOICE MODULE
           </h2>
 
@@ -91,21 +92,24 @@ function App() {
         </div>
 
         {/* CALENDAR */}
-        <div className="border border-purple-500 rounded-lg p-4 glow">
+        <div className="aura-panel p-4 min-h-0">
   <UserProfile />
 </div>
 
         {/* NEWS FEED */}
-        <div className="col-span-2 border border-purple-500 rounded-lg p-4 glow overflow-hidden min-h-0">
-          <h2 className="text-2xl font-bold mb-4">
+        <div className="aura-panel p-4 min-h-0 flex flex-col">
+          <h2 className="panel-title">
             NEWS FEED
           </h2>
+           <div className="flex-1 overflow-hidden">
+        <NewsFeed />
+    </div>
 
           <NewsFeed />
         </div>
 {/* AURA DIAGNOSTICS */}
-<div className="border border-purple-500 rounded-lg p-4 glow overflow-auto min-h-0">
-  <h2 className="text-2xl font-bold mb-4">
+<div className="aura-panel p-4 glow overflow-auto min-h-0">
+  <h2 className="panel-title">
     AURA DIAGNOSTICS
   </h2>
 
@@ -113,8 +117,8 @@ function App() {
 </div>
 
 {/* NEURAL ACTIVITY */}
-<div className="border border-purple-500 rounded-lg p-4 glow overflow-auto min-h-0">
-  <h2 className="text-2xl font-bold mb-4">
+<div className="aura-panel p-4 glow overflow-auto min-h-0">
+  <h2 className="panel-title">
     NEURAL ACTIVITY
   </h2>
 
@@ -122,8 +126,16 @@ function App() {
 </div>
 
         {/* TASK PANEL */}
-        <div className="border border-cyan-500 rounded-lg p-4 glow">
-  <ConversationStream />
+        <div className="aura-panel p-4 min-h-0 flex flex-col">
+
+    <h2 className="panel-title">
+        CONVERSATION STREAM
+    </h2>
+
+    <div className="flex-1 overflow-hidden">
+        <ConversationStream />
+    </div>
+
 </div>
 
       </div>

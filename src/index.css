@@ -1,102 +1,183 @@
 @import "tailwindcss";
 
-body {
-  margin: 0;
-  overflow: hidden;
-  background-color: black;
+/* ==========================================
+   HELIOS DESIGN SYSTEM V1
+========================================== */
+
+:root {
+
+  /* Background */
+
+  --bg-primary: #05060A;
+  --bg-secondary: #0D1117;
+  --bg-tertiary: #151821;
+
+  /* Panels */
+
+  --panel: rgba(18, 20, 28, 0.58);
+  --panel-hover: rgba(24, 26, 36, 0.68);
+
+  --panel-border: rgba(200,180,255,.16);
+
+  /* Text */
+
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #8A94A7;
+
+  /* Accents */
+
+  --accent: #A855F7;
+  --accent-soft: #C084FC;
+  --accent-light: #E9D5FF;
+
+  --cyan: #22D3EE;
+
+  /* Glow */
+
+  --glow-purple: 0 0 35px rgba(168,85,247,.35);
+  --glow-cyan: 0 0 30px rgba(34,211,238,.20);
+
+  /* Radius */
+
+  --radius: 18px;
+
+}
+
+/* ==========================================
+   GLOBAL RESET
+========================================== */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,
+body,
+#root{
+  width:100%;
+  height:100%;
+}
+
+body{
+
+  overflow:hidden;
+
+  font-family:
+    Inter,
+    "Segoe UI",
+    sans-serif;
+
+  color:var(--text-primary);
+
+  background:
+    radial-gradient(circle at top,
+      #161827 0%,
+      #0A0B11 45%,
+      #05060A 100%);
+
+}
+
+/* ==========================================
+   BACKGROUND STARS
+========================================== */
+
+body::before{
+
+  content:"";
+
+  position:fixed;
+
+  inset:0;
+
+  pointer-events:none;
+
+  opacity:.12;
 
   background-image:
-    linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
 
-  background-size: 40px 40px;
+    radial-gradient(
+      rgba(255,255,255,.9) 1px,
+      transparent 1px
+    );
 
-  font-family: Arial, sans-serif;
+  background-size:180px 180px;
+
 }
 
-.glow {
-  box-shadow:
-    0 0 10px cyan,
-    0 0 20px rgba(0,255,255,0.5);
+/* ==========================================
+   GLOBAL TRANSITIONS
+========================================== */
 
-  background: rgba(0,0,0,0.85);
+*{
 
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  transition:
+
+    background .25s ease,
+
+    border-color .25s ease,
+
+    box-shadow .25s ease,
+
+    color .25s ease;
+
 }
 
-.wave-bar {
-  width: 5px;
-  height: 15px;
-  background: cyan;
-  box-shadow: 0 0 10px cyan;
-  animation: voiceWave 1s infinite ease-in-out;
+/* ==========================================
+   SELECTION
+========================================== */
+
+::selection{
+
+  background:rgba(168,85,247,.45);
+
+  color:white;
+
 }
 
-.wave2 {
-  animation-delay: 0.1s;
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.news-scroll{
+    scrollbar-width: thin;
+    scrollbar-color: rgba(168,85,247,.45) transparent;
 }
 
-.wave3 {
-  animation-delay: 0.2s;
+.news-scroll::-webkit-scrollbar{
+
+    width:8px;
+
 }
 
-.wave4 {
-  animation-delay: 0.3s;
+.news-scroll::-webkit-scrollbar-track{
+
+    background:transparent;
+
 }
 
-.wave5 {
-  animation-delay: 0.4s;
+.news-scroll::-webkit-scrollbar-thumb{
+
+    background:linear-gradient(
+        180deg,
+        rgba(192,132,252,.55),
+        rgba(168,85,247,.75)
+    );
+
+    border-radius:20px;
+
+    border:2px solid transparent;
+
 }
 
-@keyframes voiceWave {
-  0% {
-    height: 10px;
-  }
+.news-scroll::-webkit-scrollbar-thumb:hover{
 
-  50% {
-    height: 35px;
-  }
+    background:linear-gradient(
+        180deg,
+        rgba(233,213,255,.75),
+        rgba(168,85,247,.95)
+    );
 
-  100% {
-    height: 10px;
-  }
-}
-
-body {
-  background-color: black;
-  background-image:
-    linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
-
-  background-size: 40px 40px;
-}
-
-body::before {
-  content: "";
-
-  position: fixed;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background-image:
-    radial-gradient(circle, cyan 1px, transparent 1px);
-
-  background-size: 200px 200px;
-
-  opacity: 0.15;
-
-  pointer-events: none;
-}
-
-.news-scroll::-webkit-scrollbar {
-  width: 0px;
-}
-
-.news-scroll {
-  scrollbar-width: none;
 }

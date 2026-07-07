@@ -1,0 +1,62 @@
+.aura-panel{
+
+    background: linear-gradient(
+        180deg,
+        rgba(22,24,35,.78),
+        rgba(12,14,22,.62)
+    );
+
+    border:1px solid rgba(168,85,247,.16);
+
+    border-radius:18px;
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.05),
+        0 12px 40px rgba(0,0,0,.45),
+        0 0 30px rgba(168,85,247,.08);
+
+    overflow:hidden;
+}
+
+.aura-panel:hover{
+
+    transform:translateY(-2px);
+
+    border-color:rgba(192,132,252,.30);
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.08),
+        0 18px 55px rgba(0,0,0,.50),
+        0 0 40px rgba(168,85,247,.16);
+}
+
+.aura-panel:hover{
+
+    background: var(--panel-hover);
+
+    box-shadow:
+
+        0 12px 45px rgba(0,0,0,.45),
+
+        0 0 35px rgba(168,85,247,.22);
+
+}
+
+.panel-title{
+
+    font-size:1.3rem;
+
+    font-weight:700;
+
+    letter-spacing:.08em;
+
+    color:var(--accent-light);
+
+    margin-bottom:16px;
+
+    text-transform:uppercase;
+
+}

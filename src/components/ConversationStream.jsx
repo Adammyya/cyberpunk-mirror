@@ -27,8 +27,8 @@ function ConversationStream() {
   }, []);
 
   return (
-    <div className="h-full overflow-auto text-xs">
-      <h2 className="text-2xl font-bold mb-4">
+    <div className="h-full overflow-y-auto text-sm pr-2">
+      <h2 className="panel-title">
         CONVERSATION STREAM
       </h2>
 

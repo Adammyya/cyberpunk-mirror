@@ -26,7 +26,7 @@ function NewsFeed() {
   }, []);
 
   return (
-    <div className="space-y-3 h-full overflow-y-auto pr-2">
+    <div className="space-y-3 h-full overflow-y-auto pr-2 news-scroll">
       {articles.slice(0, 8).map((article, index) => (
         <div
           key={index}

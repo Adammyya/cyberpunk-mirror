@@ -1,5 +1,6 @@
 import express from "express";
 import { detectIntent } from "../router.js";
+import { ai } from "../services/geminiService.js";
 
 import { getWeather } from "../weatherTool.js";
 import { getSystemInfo } from "../systemTool.js";
@@ -50,6 +51,7 @@ import {
 import {
   extractMemory,
 } from "../memoryExtractor.js";
+
 
 const router = express.Router();
 

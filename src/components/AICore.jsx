@@ -35,17 +35,6 @@ function AICore() {
   return () => clearInterval(interval);
 }, []);
 
-  // Temporary test
-  useEffect(() => {
-    setReactorState("thinking");
-
-    const timer = setTimeout(() => {
-      setReactorState("idle");
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   // Fetch personality mode
   useEffect(() => {
     const fetchMode = async () => {

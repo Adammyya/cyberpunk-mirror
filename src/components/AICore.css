@@ -618,37 +618,27 @@ circle,
 
 }
 
-@keyframes haloBreath {
+@keyframes haloBreath{
 
-  0% {
-
-    transform:
-      translate(-50%, -50%)
-      scale(1);
-
+0%{
+    transform:translate(-50%,-50%) scale(1);
     opacity:.35;
+}
 
-  }
+20%{
+    transform:translate(-50%,-50%) scale(1.08);
+    opacity:.7;
+}
 
-  50% {
+45%{
+    transform:translate(-50%,-50%) scale(1.25);
+    opacity:1;
+}
 
-    transform:
-      translate(-50%, -50%)
-      scale(1.28);
-
-    opacity:.9;
-
-  }
-
-  100% {
-
-    transform:
-      translate(-50%, -50%)
-      scale(1);
-
+100%{
+    transform:translate(-50%,-50%) scale(1);
     opacity:.35;
-
-  }
+}
 
 }
 
@@ -732,4 +722,145 @@ transition:.4s ease;
         ease-out
         infinite;
 
+}
+
+/* =======================================
+   LISTENING STATE
+======================================= */
+
+.reactor.listening{
+    filter:brightness(1.25);
+    transform:scale(1.03);
+}
+
+.reactor.listening .energy-halo{
+    animation-duration:3s;
+    opacity:.75;
+}
+
+.reactor.listening .pulse-wave{
+    animation:
+        pulseWave 2s ease-out infinite;
+}
+
+.reactor.listening .ring1{
+    animation-duration:8s;
+}
+
+.reactor.listening .ring2{
+    animation-duration:14s;
+}
+
+.reactor.listening .particle{
+    animation-duration:
+        6s,
+        1.8s;
+}
+
+/* =======================================
+   SPEAKING STATE
+======================================= */
+
+.reactor.speaking{
+    filter:brightness(1.6);
+    transform:scale(1.06);
+}
+
+.reactor.speaking .energy-halo{
+    animation-duration:1.3s;
+    opacity:1;
+}
+
+.reactor.speaking .pulse-wave{
+    animation:
+        pulseWave .9s linear infinite;
+}
+
+.reactor.speaking .core{
+    transform:scale(1.22);
+    filter:brightness(1.8);
+}
+
+.reactor.speaking .particle{
+    animation-duration:
+        3s,
+        .8s;
+}
+
+.reactor.speaking .ring1{
+    animation-duration:5s;
+}
+
+.reactor.speaking .ring2{
+    animation-duration:9s;
+}
+
+.reactor.speaking .ring3{
+    animation-duration:12s;
+}
+.reactor *,
+.reactor *::before,
+.reactor *::after{
+    transition:
+        transform .45s ease,
+        filter .45s ease,
+        opacity .45s ease,
+        box-shadow .45s ease,
+        border-color .45s ease;
+}
+
+.reactor.thinking .ring1{
+    animation-duration:4s;
+}
+
+.reactor.thinking .ring2{
+    animation-duration:8s;
+}
+
+.reactor.thinking .ring3{
+    animation-duration:12s;
+}
+
+@keyframes coreBreath{
+
+0%{
+    transform:scale(1);
+    filter:brightness(1);
+}
+
+18%{
+    transform:scale(1.08);
+    filter:brightness(1.2);
+}
+
+24%{
+    transform:scale(.98);
+}
+
+42%{
+    transform:scale(1.14);
+    filter:brightness(1.35);
+}
+
+100%{
+    transform:scale(1);
+    filter:brightness(1);
+}
+
+}
+
+.reactor.idle .core{
+    animation-duration:5.5s;
+}
+
+.reactor.listening .core{
+    animation-duration:3.8s;
+}
+
+.reactor.thinking .core{
+    animation-duration:2.2s;
+}
+
+.reactor.speaking .core{
+    animation-duration:1.4s;
 }

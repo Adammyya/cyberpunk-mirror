@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function NewsFeed() {
   const [articles, setArticles] = useState([]);
+  const containerRef = useRef(null);
+const resumeTimer = useRef(null);
 
   useEffect(() => {
     async function fetchNews() {
@@ -25,8 +27,25 @@ function NewsFeed() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleWheel = () => {
+  const container = containerRef.current;
+
+  if (!container) return;
+
+  container.classList.add("manual-scroll");
+
+  clearTimeout(resumeTimer.current);
+
+  resumeTimer.current = setTimeout(() => {
+    container.classList.remove("manual-scroll");
+  }, 5000);
+};
   return (
-  <div className="news-feed-container">
+  <div
+  ref={containerRef}
+  className="news-feed-container"
+  onWheel={handleWheel}
+>
 
     <div className="news-feed-scroll">
 

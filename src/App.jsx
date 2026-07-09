@@ -128,9 +128,7 @@ function App() {
         {/* TASK PANEL */}
         <div className="aura-panel p-4 min-h-0 flex flex-col">
 
-    <h2 className="panel-title">
-        CONVERSATION STREAM
-    </h2>
+    
 
     <div className="flex-1 overflow-hidden">
         <ConversationStream />

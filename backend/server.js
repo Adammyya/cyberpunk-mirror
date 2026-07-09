@@ -78,23 +78,61 @@ app.get("/api/system", async (req, res) => {
 
 app.get("/api/news", async (req, res) => {
   try {
-    const response = await axios.get(
-      "https://newsapi.org/v2/everything",
-      {
-        params: {
-          q: "artificial intelligence OR technology OR programming",
-          language: "en",
-          sortBy: "publishedAt",
-          pageSize: 8,
-          apiKey: process.env.NEWS_API_KEY,
-        },
-      }
-    );
+    const [india, world, ai] = await Promise.all([
 
-    // Save articles to memory for AURA to access later
-    saveNews(response.data.articles);
+  axios.get("https://newsapi.org/v2/top-headlines", {
+    params: {
+      country: "in",
+      pageSize: 20,
+      apiKey: process.env.NEWS_API_KEY,
+    },
+  }),
 
-    res.json(response.data);
+  axios.get("https://newsapi.org/v2/everything", {
+  params: {
+    q: "world",
+    language: "en",
+    sortBy: "publishedAt",
+    pageSize: 20,
+    apiKey: process.env.NEWS_API_KEY,
+  },
+}),
+  axios.get("https://newsapi.org/v2/everything", {
+    params: {
+      q: "artificial intelligence OR technology OR programming OR software",
+      language: "en",
+      sortBy: "publishedAt",
+      pageSize: 20,
+      apiKey: process.env.NEWS_API_KEY,
+    },
+  }),
+
+]);
+
+const articles = [
+  ...india.data.articles,
+  ...world.data.articles,
+  ...ai.data.articles,
+];
+
+// Remove duplicate articles by URL
+const uniqueArticles = Array.from(
+  new Map(
+    articles
+      .filter(article => article.url)
+      .map(article => [article.url, article])
+  ).values()
+);
+
+// Shuffle articles
+const shuffledArticles = uniqueArticles.sort(() => Math.random() - 0.5);
+
+saveNews(articles);
+console.log("Total articles:", shuffledArticles.length);
+
+res.json({
+  articles: shuffledArticles,
+});
 
   } catch (error) {
     console.error(error);

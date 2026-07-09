@@ -26,21 +26,26 @@ function NewsFeed() {
   }, []);
 
   return (
-    <div className="space-y-3 h-full overflow-y-auto pr-2 news-scroll">
-      {articles.slice(0, 8).map((article, index) => (
+  <div className="news-feed-container">
+
+    <div className="news-feed-scroll">
+
+      {[...articles, ...articles].map((article, index) => (
         <div
           key={index}
           className="border-b border-cyan-900 pb-3"
         >
           <div className="flex justify-between text-xs text-cyan-600 uppercase mb-1">
             <span>{article.source?.name}</span>
-            <span>LIVE</span>
+            <span className="live-badge">
+  ● LIVE
+</span>
           </div>
 
           <a
             href={article.url}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="text-cyan-300 hover:text-cyan-100 block"
           >
             {article.title}
@@ -53,8 +58,11 @@ function NewsFeed() {
           </p>
         </div>
       ))}
+
     </div>
-  );
+
+  </div>
+);
 }
 
 export default NewsFeed;

@@ -75,7 +75,19 @@ function AICore() {
 
         <div className="scan-line"></div>
 
-        <div className="core"></div>
+        <div className="core">
+
+  <div className="core-glow"></div>
+
+  <div className="iris iris-outer"></div>
+
+  <div className="iris iris-middle"></div>
+
+  <div className="iris iris-inner"></div>
+
+  <div className="pupil"></div>
+
+</div>
         <div className="particle p1"></div>
 <div className="particle p2"></div>
 <div className="particle p3"></div>

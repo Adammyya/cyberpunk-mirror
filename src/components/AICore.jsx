@@ -68,7 +68,26 @@ function AICore() {
         <div className="pulse-wave"></div>
         <div className="hud-ring"></div>
 
-        <div className="ring ring1"></div>
+        <div className="ring ring1">
+  <svg
+    viewBox="0 0 120 120"
+    className="ring-svg"
+  >
+    <circle
+      cx="60"
+      cy="60"
+      r="46"
+      className="arc arc-1"
+    />
+
+    <circle
+      cx="60"
+      cy="60"
+      r="46"
+      className="arc arc-2"
+    />
+  </svg>
+</div>
         <div className="ring ring2"></div>
         <div className="ring ring3"></div>
         <div className="ring ring4"></div>

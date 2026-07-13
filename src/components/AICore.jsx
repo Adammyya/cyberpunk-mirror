@@ -1,6 +1,7 @@
 import "./AICore.css";
 import { useEffect, useState } from "react";
 import PersonalityStatus from "./PersonalityStatus";
+import NavigationSystem from "./reactor/NavigationSystem";
 
 function AICore() {
   const [currentMode, setCurrentMode] = useState("default");
@@ -68,7 +69,7 @@ function AICore() {
         <div className="pulse-wave"></div>
         <div className="hud-ring"></div>
 
-        <div className="ring ring1">
+        {/* <div className="ring ring1">
   <svg
     viewBox="0 0 120 120"
     className="ring-svg"
@@ -87,10 +88,13 @@ function AICore() {
       className="arc arc-2"
     />
   </svg>
-</div>
-        <div className="ring ring2"></div>
+</div> */}
+       {/*  <div className="ring ring2"></div>
         <div className="ring ring3"></div>
-        <div className="ring ring4"></div>
+        <div className="ring ring4"></div> */}
+        <div className="hud-system">
+    <NavigationSystem />
+</div>
 
         <div className="scan-line"></div>
 

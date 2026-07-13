@@ -2,6 +2,7 @@ import "./AICore.css";
 import { useEffect, useState } from "react";
 import PersonalityStatus from "./PersonalityStatus";
 import NavigationSystem from "./reactor/NavigationSystem";
+import TickGrid from "./reactor/TickGrid";
 
 function AICore() {
   const [currentMode, setCurrentMode] = useState("default");
@@ -94,6 +95,7 @@ function AICore() {
         <div className="ring ring4"></div> */}
         <div className="hud-system">
     <NavigationSystem />
+     <TickGrid />
 </div>
 
         <div className="scan-line"></div>

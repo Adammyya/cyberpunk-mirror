@@ -997,3 +997,41 @@ transition:.4s ease;
 
     pointer-events:none;
 }
+.scanner-sweep{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    pointer-events:none;
+
+    transform-origin:center;
+
+    transform-box:fill-box;
+
+    animation:scannerRotate 6s linear infinite;
+
+}
+
+@keyframes scannerRotate{
+
+from{
+
+transform:rotate(0deg);
+
+}
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+.scanner-sweep {
+    width: 100%;
+    height: 100%;
+}

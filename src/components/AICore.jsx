@@ -97,7 +97,7 @@ function AICore() {
         <div className="hud-system">
     <NavigationSystem />
     <TickGrid />
-    <ScannerSweep />
+    <ScannerSweep reactorState={reactorState} />
 </div>
 
         <div className="scan-line"></div>

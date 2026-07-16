@@ -7,7 +7,7 @@ switch (reactorState) {
     break;
 
   case "thinking":
-    animationSpeed = "2.5s";
+    animationSpeed = "0.5s";
     break;
 
   case "speaking":

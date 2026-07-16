@@ -1,11 +1,34 @@
-function ScannerSweep() {
-  return ( 
+function ScannerSweep({ reactorState }) {
+    let animationSpeed = "12s";
+
+switch (reactorState) {
+  case "listening":
+    animationSpeed = "6s";
+    break;
+
+  case "thinking":
+    animationSpeed = "2.5s";
+    break;
+
+  case "speaking":
+    animationSpeed = "0s";
+    break;
+
+  default:
+    animationSpeed = "12s";
+}
+  return (
     <svg
-      className="scanner-sweep"
+  className="scanner-sweep"
+  style={{
+    animationDuration: animationSpeed,
+    animationPlayState:
+      reactorState === "speaking"
+        ? "paused"
+        : "running",
+  }}
   viewBox="0 0 300 300"
-  width="300"
-  height="300"
-    >
+>
         <defs>
             <linearGradient
     id="scannerGradient"

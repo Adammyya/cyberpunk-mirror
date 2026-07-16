@@ -4,39 +4,13 @@ import PersonalityStatus from "./PersonalityStatus";
 import NavigationSystem from "./reactor/NavigationSystem";
 import TickGrid from "./reactor/TickGrid";
 import ScannerSweep from "./reactor/ScannerSweep";
+import useReactorState from "../hooks/useReactorState";
 
 function AICore() {
   const [currentMode, setCurrentMode] = useState("default");
 
   // Reactor state
-  const [reactorState, setReactorState] = useState("idle");
-  useEffect(() => {
-  const fetchReactorState = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/state"
-      );
-
-      const data = await response.json();
-
-      setReactorState(data.state);
-    } catch (error) {
-      console.error(
-        "Error fetching reactor state:",
-        error
-      );
-    }
-  };
-
-  fetchReactorState();
-
-  const interval = setInterval(
-    fetchReactorState,
-    300
-  );
-
-  return () => clearInterval(interval);
-}, []);
+  const reactorState = useReactorState();
 
   // Fetch personality mode
   useEffect(() => {

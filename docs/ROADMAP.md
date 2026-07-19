@@ -1,44 +1,137 @@
 # AURA Roadmap
 
-## Current Sprint
+---
 
-### Reactor
+# Sprint 10 — Reactor Evolution
 
-- [ ] Adaptive Reactor State
-- [ ] Speaking Animation
-- [ ] Listening Animation
+## Reactor
 
-### Intelligence
+✅ Adaptive Reactor
 
-- [ ] Cognitive Pipeline
-- [ ] Neural Timeline
+🔄 Reactor 2.0
 
-### Voice
+⬜ Idle Animation
 
-- [ ] Voice Visualizer
+⬜ Thinking Animation
+
+⬜ Listening Animation
+
+⬜ Speaking Animation
 
 ---
 
-## Next Sprint
+## Intelligence
 
-### Multi-Model Routing
+✅ Thinking Engine
 
-- [ ] GPT
-- [ ] Claude
+✅ Cognitive Router
 
-### Memory
+✅ State Engine
 
-- [ ] Long-Term Memory
-- [ ] Semantic Memory
+⬜ Neural Activity 2.0
+
+⬜ AI Insight
 
 ---
 
-## Future
+## Voice
 
-Desktop Automation
+⬜ Voice Visualization
 
-Vision
+⬜ Live Waveform
 
-Hardware
+⬜ Voice States
 
-Wearables
+---
+
+# Sprint 11 — Intelligent Dashboard
+
+## Dashboard
+
+⬜ Mission Control
+
+⬜ Daily Briefing
+
+⬜ Productivity Timeline
+
+⬜ Personal Goals
+
+⬜ Knowledge Graph
+
+---
+
+## AI
+
+⬜ Long-Term Semantic Memory
+
+⬜ Context Retrieval
+
+⬜ Learning Engine
+
+---
+
+# Sprint 12 — AI Operating System
+
+## Productivity
+
+⬜ File Understanding
+
+⬜ Calendar
+
+⬜ Email
+
+⬜ GitHub
+
+⬜ Notes
+
+⬜ Research Assistant
+
+---
+
+## Automation
+
+⬜ Desktop Automation
+
+⬜ Command Execution
+
+⬜ Workflow Builder
+
+---
+
+# Future
+
+## Multi-Model AI
+
+⬜ Claude
+
+⬜ GPT
+
+⬜ Local LLM
+
+---
+
+## Vision
+
+⬜ OCR
+
+⬜ Screen Understanding
+
+⬜ Camera Input
+
+---
+
+## Hardware
+
+⬜ Physical Reactor
+
+⬜ Smart Glasses
+
+⬜ Wearable Module
+
+⬜ AI Desk Companion
+
+---
+
+# Ultimate Goal
+
+An intelligent operating system that feels alive, adapts to its user, and seamlessly integrates intelligence into everyday computing.

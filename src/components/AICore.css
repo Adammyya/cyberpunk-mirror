@@ -885,6 +885,21 @@ transition:.4s ease;
 
     animation: corePulse 4s ease-in-out infinite;
 }
+.reactor.idle .core-glow {
+    animation: corePulse 4s ease-in-out infinite;
+}
+
+.reactor.thinking .core-glow {
+    animation: corePulse 0.8s ease-in-out infinite;
+}
+
+.reactor.speaking .core-glow {
+    animation: corePulse 1.2s ease-in-out infinite;
+}
+
+.reactor.listening .core-glow {
+    animation: corePulse 2s ease-in-out infinite;
+}
 
 .iris{
     position:absolute;

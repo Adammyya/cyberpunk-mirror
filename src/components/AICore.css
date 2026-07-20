@@ -864,14 +864,13 @@ transition:.4s ease;
 }
 
 
-.core-glow{
+.core-glow {
+    position: absolute;
 
-    position:absolute;
+    width: 60px;
+    height: 60px;
 
-    width:60px;
-    height:60px;
-
-    border-radius:50%;
+    border-radius: 50%;
 
     background:
         radial-gradient(
@@ -880,9 +879,11 @@ transition:.4s ease;
             transparent 70%
         );
 
-    filter:blur(18px);
+    filter: blur(18px);
 
-    opacity:.8;
+    opacity: .8;
+
+    animation: corePulse 4s ease-in-out infinite;
 }
 
 .iris{

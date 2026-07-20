@@ -5,6 +5,7 @@ import NavigationSystem from "./reactor/NavigationSystem";
 import TickGrid from "./reactor/TickGrid";
 import ScannerSweep from "./reactor/ScannerSweep";
 import useReactorState from "../hooks/useReactorState";
+import NeuralLotus from "./reactor/NeuralLotus/NeuralLotus";
 
 function AICore() {
   const [currentMode, setCurrentMode] = useState("default");
@@ -76,9 +77,12 @@ function AICore() {
 
         <div className="scan-line"></div>
 
-        <div className="core">
 
   <div className="core-glow"></div>
+  <NeuralLotus />
+        <div className="core">
+
+
 
   <div className="iris iris-outer"></div>
 

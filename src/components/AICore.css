@@ -1069,3 +1069,13 @@ transform:rotate(360deg);
     }
 
 }
+.neural-lotus {
+    position: absolute;
+
+    width: 110px;
+    height: 110px;
+
+    pointer-events: none;
+
+    z-index: 5;
+}

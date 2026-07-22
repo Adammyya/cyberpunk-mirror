@@ -1,4 +1,5 @@
 import LotusPetal from "./LotusPetal";
+import "./lotus.css";
 
 export default function NeuralLotus() {
     return (
@@ -8,11 +9,11 @@ export default function NeuralLotus() {
             width="160"
             height="160"
         >
-            {Array.from({ length: 6 }).map((_, i) => (
+            {Array.from({ length: 8 }).map((_, i) => (
                 <LotusPetal
                     key={i}
-                    rotation={i * 60}
-                    distance={30}
+                    rotation={i * 45}
+                    distance={42 }
                 />
             ))}
         </svg>

@@ -1079,3 +1079,14 @@ transform:rotate(360deg);
 
     z-index: 5;
 }
+.lotus-petal {
+    fill: rgba(150, 70, 255, 0.18);
+
+    stroke: rgba(210, 150, 255, 0.95);
+
+    stroke-width: 1.4;
+
+    filter: drop-shadow(0 0 8px rgba(180, 100, 255, 0.45));
+
+    transition: all 0.35s ease;
+}

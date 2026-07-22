@@ -13,7 +13,7 @@ export default function NeuralLotus() {
                 <LotusPetal
                     key={i}
                     rotation={i * 45}
-                    distance={42 }
+                    distance={52 }
                 />
             ))}
         </svg>

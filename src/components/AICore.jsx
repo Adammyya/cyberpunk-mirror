@@ -81,6 +81,7 @@ function AICore() {
   <div className="core-glow"></div>
   <NeuralLotus />
         <div className="core">
+          
 
 
 

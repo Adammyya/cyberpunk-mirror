@@ -13,16 +13,20 @@ export default function LotusPetal({
                 scale(${scale})
             `}
         >
-
             <path
-                d="
-                    M 0 -52
-                    C 18 -46 24 -18 0 0
-                    C -24 -18 -18 -46 0 -52
-                    Z
-                "
-                className="lotus-petal"
-            />
+    d="
+        M 0 -62
+
+        C 10 -60 18 -48 21 -32
+        C 24 -14 18 6 0 24
+
+        C -18 6 -24 -14 -21 -32
+        C -18 -48 -10 -60 0 -62
+
+        Z
+    "
+    className="lotus-petal"
+/>
 
         </g>
 

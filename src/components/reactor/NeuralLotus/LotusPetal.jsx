@@ -1,35 +1,30 @@
 export default function LotusPetal({
-    rotation = 0,
-    distance = 0,
-    scale = 1,
+  rotation = 0,
+  distance = 0,
+  scale = 1,
 }) {
+  return (
+    <g
+      transform={`
+        rotate(${rotation})
+        translate(0 ${-distance})
+        scale(${scale})
+      `}
+    >
+      <path
+        className="lotus-petal"
+        d="
+          M 0 -82
 
-    return (
+          C 8 -80 16 -64 18 -42
+          C 20 -20 15 8 0 42
 
-        <g
-            transform={`
-                rotate(${rotation})
-                translate(0 ${-distance})
-                scale(${scale})
-            `}
-        >
-            <path
-    d="
-        M 0 -62
+          C -15 8 -20 -20 -18 -42
+          C -16 -64 -8 -80 0 -82
 
-        C 10 -60 18 -48 21 -32
-        C 24 -14 18 6 0 24
-
-        C -18 6 -24 -14 -21 -32
-        C -18 -48 -10 -60 0 -62
-
-        Z
-    "
-    className="lotus-petal"
-/>
-
-        </g>
-
-    );
-
+          Z
+        "
+      />
+    </g>
+  );
 }

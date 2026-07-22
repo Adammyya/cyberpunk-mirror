@@ -1090,16 +1090,3 @@ transform:rotate(360deg);
 
     transition: all 0.35s ease;
 }
-.core-halo {
-    fill: rgba(180,120,255,.18);
-    filter: blur(6px);
-}
-
-.core-ring {
-    fill: rgba(255,255,255,.9);
-    opacity: .35;
-}
-
-.core-center {
-    fill: #ffffff;
-}

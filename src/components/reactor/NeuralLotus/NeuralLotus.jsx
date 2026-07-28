@@ -16,7 +16,7 @@ export default function NeuralLotus() {
       key={`secondary-${i}`}
       rotation={i * 60 + 30}
       distance={44}
-      scale={0.72}
+      scale={0.7 2};
     />
   ))}
 

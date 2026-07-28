@@ -12,3 +12,6 @@
 
     filter: drop-shadow(0 0 8px rgba(170, 120, 255, 0.3));
 }
+.lotus-petal {
+    transform-origin: center;
+}

@@ -80,7 +80,7 @@ function AICore() {
 
   <div className="core-glow"></div>
   <NeuralLotus reactorState={reactorState} />
-        <div className="core">
+        <div className={`core ${reactorState}`}>
           
 
 

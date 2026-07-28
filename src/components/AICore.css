@@ -211,23 +211,6 @@ opacity:.7;
         inset 0 0 15px rgba(255,255,255,.08);
 
     overflow:hidden;
-    .core {
-    position: absolute;
-
-    width: 76px;
-    height: 76px;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-}
 }
 
 .core::after{
@@ -1120,4 +1103,56 @@ transform:rotate(360deg);
     filter: drop-shadow(0 0 8px rgba(180, 100, 255, 0.45));
 
     transition: all 0.35s ease;
+}
+@keyframes coreHeartbeat {
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.02);
+    }
+
+}
+
+.core.idle{
+    animation:coreHeartbeat 4s ease-in-out infinite;
+}
+
+.core.idle {
+    animation: coreHeartbeat 4s ease-in-out infinite;
+}
+.core.listening .iris-middle {
+    border-color: rgba(0,229,255,.45);
+}
+
+.core.listening .pupil {
+    transform: scale(.9);
+}
+@keyframes irisRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.core.thinking .iris-inner {
+    animation: irisRotate 8s linear infinite;
+}
+@keyframes speakingPulse {
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.core.speaking {
+    animation: speakingPulse .8s ease-in-out infinite;
 }

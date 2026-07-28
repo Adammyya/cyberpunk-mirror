@@ -211,6 +211,23 @@ opacity:.7;
         inset 0 0 15px rgba(255,255,255,.08);
 
     overflow:hidden;
+    .core {
+    position: absolute;
+
+    width: 76px;
+    height: 76px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+}
 }
 
 .core::after{
@@ -913,47 +930,61 @@ transition:.4s ease;
     align-items:center;
 }
 
-.iris-outer{
+.iris-outer {
+    position: absolute;
+    inset: 0;
 
-    width:60px;
-    height:60px;
+    border-radius: 50%;
 
-    border:2px dashed rgba(125,211,252,.8);
+    border: 1px solid rgba(120,255,255,.18);
 
     box-shadow:
-        0 0 12px rgba(125,211,252,.35);
+        0 0 18px rgba(0,229,255,.18),
+        inset 0 0 12px rgba(170,120,255,.12);
 }
 
-.iris-middle{
+.iris-middle {
+    position: absolute;
 
-    width:42px;
-    height:42px;
+    width: 58px;
+    height: 58px;
 
-    border:2px solid rgba(192,132,252,.8);
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.10);
+
+    backdrop-filter: blur(4px);
 }
 
-.iris-inner{
+.iris-inner {
+    position: absolute;
 
-    width:24px;
-    height:24px;
+    width: 34px;
+    height: 34px;
 
-    border:1px solid rgba(255,255,255,.7);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(180,130,255,.35),
+            rgba(0,0,0,0)
+        );
 }
 
-.pupil{
+.pupil {
+    position: absolute;
 
-    width:5px;
-    height:5px;
+    width: 10px;
+    height: 10px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:#ffffff;
+    background: white;
 
     box-shadow:
         0 0 8px white,
-        0 0 18px #7dd3fc;
-
-    z-index:10;
+        0 0 20px rgba(170,120,255,.6);
 }
 
 .ring-svg{

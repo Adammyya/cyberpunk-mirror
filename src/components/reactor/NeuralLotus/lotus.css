@@ -29,3 +29,38 @@
 .neural-lotus.speaking .lotus-petal {
     opacity: 1;
 }
+
+@keyframes lotusBreathing {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.025);
+    }
+}
+
+.neural-lotus.idle {
+    animation: lotusBreathing 4s ease-in-out infinite;
+}
+
+.neural-lotus.listening {
+    transform: scale(1.05);
+    transition: transform 300ms ease;
+}
+.neural-lotus.thinking .lotus-petal {
+    filter: drop-shadow(0 0 12px rgba(170,120,255,.6));
+}
+.neural-lotus.speaking {
+    animation: lotusSpeaking .8s ease-in-out infinite;
+}
+
+@keyframes lotusSpeaking {
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+}

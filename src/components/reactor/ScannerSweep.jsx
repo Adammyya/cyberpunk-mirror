@@ -1,3 +1,4 @@
+import "./scanner.css";
 function ScannerSweep({ reactorState }) {
     let animationSpeed = "12s";
 

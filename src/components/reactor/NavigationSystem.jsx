@@ -1,5 +1,5 @@
 import NavigationArc from "./NavigationArc";
-
+import "./navigation.css";
 function NavigationSystem() {
   return (
     <svg

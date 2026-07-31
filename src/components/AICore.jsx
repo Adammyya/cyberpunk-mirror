@@ -69,6 +69,7 @@ function AICore() {
        {/*  <div className="ring ring2"></div>
         <div className="ring ring3"></div>
         <div className="ring ring4"></div> */}
+        <NeuralLotus />
         <div className="hud-system">
     <NavigationSystem />
     <TickGrid />

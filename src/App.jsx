@@ -38,7 +38,7 @@ function App() {
       <PresenceField>
         <TopBar />
 
-        <div className="min-h-screen w-screen p-4 overflow-hidden text-[var(--text-primary)]">
+        <div className="h-full w-full p-4 overflow-hidden text-[var(--text-primary)]">
           <Header />
 
           <div

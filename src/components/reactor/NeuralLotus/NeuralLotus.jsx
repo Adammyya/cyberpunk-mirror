@@ -6,11 +6,11 @@ export default function NeuralLotus({
 }) {
     return (
         <svg
-            className={`neural-lotus ${reactorState}`}
-            viewBox="-80 -80 160 160"
-            width="160"
-            height="160"
-        >
+    className={`neural-lotus ${reactorState}`}
+    viewBox="-80 -80 160 160"
+    width="140"
+    height="140"
+>
             <>
                 {/* Secondary Petals */}
                 {Array.from({ length: 6 }).map((_, i) => (

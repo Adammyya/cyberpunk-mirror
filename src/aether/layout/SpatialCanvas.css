@@ -1,0 +1,16 @@
+.aether-spatial-canvas {
+
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background: var(--aether-obsidian);
+
+    color: var(--aether-pearl);
+
+    isolation: isolate;
+
+}

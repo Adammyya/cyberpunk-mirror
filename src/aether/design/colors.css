@@ -1,0 +1,45 @@
+:root {
+
+  /* ==========================================
+     AETHER — FOUNDATION
+  ========================================== */
+
+  --aether-obsidian: #07080D;
+  --aether-void: #0D1018;
+  --aether-space: #131722;
+
+  /* ==========================================
+     PEARL LIGHT
+  ========================================== */
+
+  --aether-pearl: #F8F7FF;
+  --aether-white: #FFFFFF;
+  --aether-moon: #EAE7FF;
+
+  /* ==========================================
+     CRYSTAL
+  ========================================== */
+
+  --aether-crystal-1: rgba(255,255,255,0.05);
+  --aether-crystal-2: rgba(255,255,255,0.10);
+  --aether-crystal-3: rgba(255,255,255,0.16);
+
+  /* ==========================================
+     STATE COLORS
+  ========================================== */
+
+  --aether-cognition: #79E8FF;
+  --aether-memory: #CDA7FF;
+  --aether-success: #6DFFB5;
+  --aether-warning: #FFD36B;
+  --aether-error: #FF6D8A;
+
+  /* ==========================================
+     LIGHT
+  ========================================== */
+
+  --aether-light-soft: rgba(255,255,255,0.08);
+  --aether-light-medium: rgba(255,255,255,0.18);
+  --aether-light-strong: rgba(255,255,255,0.32);
+
+}

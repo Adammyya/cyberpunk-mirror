@@ -1,0 +1,126 @@
+/* ==========================================================
+   AETHER MOTION SYSTEM
+   ========================================================== */
+
+:root {
+
+    /* Duration */
+
+    --motion-fast: 180ms;
+    --motion-normal: 320ms;
+    --motion-slow: 600ms;
+    --motion-breathe: 4000ms;
+
+    /* Easing */
+
+    --ease-standard: cubic-bezier(.4,0,.2,1);
+    --ease-soft: cubic-bezier(.22,.61,.36,1);
+    --ease-organic: cubic-bezier(.25,.46,.45,.94);
+
+}
+
+/* ==========================================================
+   PRESENCE
+   ========================================================== */
+
+@keyframes aetherBreathing {
+
+    0%,100%{
+
+        transform:scale(1);
+
+        opacity:.92;
+
+    }
+
+    50%{
+
+        transform:scale(1.015);
+
+        opacity:1;
+
+    }
+
+}
+
+.aether-breathing{
+
+    animation:
+        aetherBreathing
+        var(--motion-breathe)
+        var(--ease-soft)
+        infinite;
+
+}
+
+/* ==========================================================
+   PROJECTION APPEAR
+   ========================================================== */
+
+@keyframes projectionReveal{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(8px)
+            scale(.985);
+
+        filter:blur(8px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter:blur(0);
+
+    }
+
+}
+
+.aether-reveal{
+
+    animation:
+        projectionReveal
+        var(--motion-normal)
+        var(--ease-soft)
+        forwards;
+
+}
+
+/* ==========================================================
+   GENTLE FLOAT
+   ========================================================== */
+
+@keyframes ambientFloat{
+
+    0%,100%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-2px);
+
+    }
+
+}
+
+.aether-float{
+
+    animation:
+        ambientFloat
+        6s
+        ease-in-out
+        infinite;
+
+}

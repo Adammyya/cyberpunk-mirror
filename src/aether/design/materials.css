@@ -1,0 +1,91 @@
+/* ==========================================================
+   AETHER MATERIAL SYSTEM
+   ========================================================== */
+
+/* ---------- Crystal Surface ---------- */
+
+.aether-crystal {
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.03)
+    );
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    backdrop-filter: blur(40px);
+
+    -webkit-backdrop-filter: blur(40px);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        0 20px 60px rgba(0,0,0,.35);
+
+    border-radius: 28px;
+}
+
+
+/* ---------- Liquid Glass ---------- */
+
+.aether-glass {
+
+    background: rgba(255,255,255,.04);
+
+    backdrop-filter: blur(24px);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+}
+
+
+/* ---------- Pearl Glow ---------- */
+
+.aether-glow {
+
+    box-shadow:
+
+        0 0 24px rgba(255,255,255,.08),
+
+        0 0 60px rgba(235,228,255,.10);
+
+}
+
+
+/* ---------- Projection Layer ---------- */
+
+.aether-projection{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+/* ---------- Ambient Lighting ---------- */
+
+.aether-projection::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-30%;
+
+    background:
+
+        radial-gradient(
+
+            circle,
+
+            rgba(255,255,255,.08),
+
+            transparent 70%
+
+        );
+
+    opacity:.45;
+
+    pointer-events:none;
+
+}

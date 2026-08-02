@@ -1,0 +1,77 @@
+.aether-chrome{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.02)
+        );
+
+    border:1px solid rgba(255,255,255,.16);
+
+    backdrop-filter:blur(30px);
+
+    -webkit-backdrop-filter:blur(30px);
+
+    box-shadow:
+
+        inset 0 1px 1px rgba(255,255,255,.18),
+
+        inset 0 -1px 2px rgba(0,0,0,.45),
+
+        0 10px 40px rgba(0,0,0,.30);
+
+}
+.chrome-highlight{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:40%;
+
+    background:
+
+        linear-gradient(
+
+            to bottom,
+
+            rgba(255,255,255,.22),
+
+            transparent
+
+        );
+
+    pointer-events:none;
+
+}
+.chrome-inner{
+
+    position:absolute;
+
+    inset:1px;
+
+    border-radius:inherit;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    pointer-events:none;
+
+}
+.chrome-content{
+
+    position:relative;
+
+    z-index:5;
+
+}

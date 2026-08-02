@@ -71,10 +71,10 @@ function AICore() {
         <div className="ring ring4"></div> */}
         <NeuralLotus />
         <div className="hud-system">
-    <NavigationSystem />
-    <TickGrid />
-    <ScannerSweep reactorState={reactorState} />
-</div>
+          <NavigationSystem />
+          <TickGrid />
+          <ScannerSweep reactorState={reactorState} />
+        </div>
 
         <div className="scan-line"></div>
 

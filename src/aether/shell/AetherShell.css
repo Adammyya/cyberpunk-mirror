@@ -1,8 +1,94 @@
-.aether-shell {
-    position: relative;
+.aether-shell{
 
-    width: 100%;
-    height: 100%;
+    position:relative;
 
-    overflow: hidden;
+    width:100%;
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.projection-layout{
+
+    flex:1;
+
+    display:grid;
+
+    grid-template-columns:1fr 1.4fr 1fr;
+
+    align-items:center;
+
+    gap:48px;
+
+    padding:120px 80px 40px;
+
+}
+
+.left-region,
+.right-region{
+
+    height:520px;
+
+    border:1px dashed rgba(255,255,255,.15);
+
+    border-radius:32px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+}
+
+.reactor-region{
+
+    height:640px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:1px dashed rgba(255,255,255,.15);
+
+    border-radius:50px;
+
+    color:white;
+
+}
+
+.bottom-region{
+
+    height:120px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+.reactor-layer{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    pointer-events:none;
+
 }

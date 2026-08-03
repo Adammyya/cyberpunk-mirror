@@ -5,17 +5,22 @@ import TopBar from "../components/topbar/TopBar";
 export default function AetherShell() {
   return (
     <div className="aether-shell">
+
       <TopBar />
 
       <div className="projection-layout">
-        <aside className="left-projection" />
 
-        <main className="reactor-region" />
+    <aside className="left-region" />
 
-        <aside className="right-projection" />
-      </div>
+    <aside className="right-region" />
 
-      <footer className="bottom-dock-region" />
+</div>
+
+<div className="reactor-layer" />
+
+      <aside className="bottom-region" />
+
+
     </div>
   );
 }

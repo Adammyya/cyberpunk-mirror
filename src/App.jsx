@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import "./styles/glass.css";
+const USE_AETHER = false;
 
 import Header from "./components/Header";
 import AICore from "./components/AICore";
@@ -32,6 +33,7 @@ function App() {
 
     return () => clearInterval(timer);
   }, []);
+  
 
   return (
     <SpatialCanvas>

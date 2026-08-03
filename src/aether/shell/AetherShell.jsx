@@ -1,4 +1,6 @@
 import "./AetherShell.css";
+import ReactorStage from "../components/reactor/ReactorStage";
+import AICore from "../../components/AICore";
 
 import TopBar from "../components/topbar/TopBar";
 
@@ -7,16 +9,15 @@ export default function AetherShell() {
     <div className="aether-shell">
 
       <TopBar />
+      <div className="reactor-layer">
 
-      <div className="projection-layout">
+    <ReactorStage>
 
-    <aside className="left-region" />
+        <AICore />
 
-    <aside className="right-region" />
+    </ReactorStage>
 
 </div>
-
-<div className="reactor-layer" />
 
       <aside className="bottom-region" />
 
